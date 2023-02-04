@@ -24,6 +24,7 @@
 Before you install and start using Libur.run, please make sure your system meets the following requirements:
 
 - Ruby version 3.1.2
+- Node.js 16 or newer
 - PostgreSQL 14 or newer
 - Redis 6 or newer
 
