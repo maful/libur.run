@@ -1,0 +1,24 @@
+<%= render PageHeaderComponent.new(title: "Calendar Overview", show_breadcrumb: false) do |c| %>
+  <% c.with_supporting_text do %>
+    Stay organized and on top of important dates with our comprehensive calendar featuring leaves, birthdays, and public holidays within the company.
+  <% end %>
+<% end %>
+
+<%= turbo_frame_tag "calendar_events" do %>
+  <div>
+    <div data-controller="calendar" class="flex flex-col gap-6">
+      <div class="flex gap-3 items-center">
+        <div class="flex gap-3">
+          <button type="button" class="btn btn-tertiary-gray" data-action="calendar#prevMonth">
+            <%= inline_svg_tag "icons/chevron-left.svg", class: "h-5 w-5 text-gray-900" %>
+          </button>
+          <button type="button" class="btn btn-tertiary-gray" data-action="calendar#nextMonth">
+            <%= inline_svg_tag "icons/chevron-right.svg", class: "h-5 w-5 text-gray-900" %>
+          </button>
+        </div>
+        <span class="font-semibold text-base text-gray-900" data-calendar-target="title"></span>
+      </div>
+      <div id="calendar" data-calendar-target="container" style="height: 600px;"></div>
+    </div>
+  </div>
+<% end %>

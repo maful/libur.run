@@ -1,0 +1,26 @@
+<div class="button-dropdown" data-controller="dropdown">
+  <%= button_tag type: "button",
+                 data: { action: "dropdown#toggle click@window->dropdown#hide" },
+                 class: ["button-dropdown__button", button_class] do %>
+    <span class="button-dropdown__text"><%= text %></span>
+    <%= tag.div class: ["button-dropdown__icon", icon_position_class] do %>
+      <%= inline_svg_tag "icons/#{icon}.svg" %>
+    <% end %>
+  <% end %>
+
+  <div
+    data-dropdown-target="menu"
+    class="<%= class_names("hidden", "button-dropdown__menu", menu_class) %>"
+    data-transition-enter-from="fade-enter-from"
+    data-transition-enter-to="fade-enter-to"
+    data-transition-leave-from="fade-leave-from"
+    data-transition-leave-to="fade-leave-to"
+  >
+    <div class="button-dropdown__links">
+      <% links.each do |link| %>
+        <%= link %>
+      <% end %>
+      <%= content %>
+    </div>
+  </div>
+</div>

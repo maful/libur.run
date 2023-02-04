@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= render "shared/head" %>
+  </head>
+  <body>
+    <%= render "dashboard/shared/notification" %>
+    <%= render "shared/navbar" %>
+
+    <main class="block bg-white px-0 pt-12 pb-24">
+      <%# <div class="max-w-7xl min-h-[calc(100vh_-_217px)] mx-auto py-0 px-8 flex flex-col gap-8"> %>
+      <div class="max-w-7xl mx-auto py-0 px-8 flex flex-col gap-8">
+        <%= yield %>
+      </div>
+    </main>
+
+    <%= turbo_frame_tag "turbo_modal" %>
+
+    <dialog id="turbo-confirm" class="dialog">
+      <div class="dialog__container">
+        <div class="dialog__body">
+          <div class="dialog__content">
+            <div class="dialog__featured-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+              </svg>
+            </div>
+            <div class="dialog__text">
+              <h3 class="dialog__title" id="title">Delete</h3>
+              <div class="dialog__supporting-text" id="supporting_text">Are you sure you want to delete this? This action cannot be undone.</div>
+            </div>
+          </div>
+          <form method="dialog">
+            <div class="dialog__actions">
+              <button value="cancel" class="btn btn--secondary-gray">Close</button>
+              <button value="confirm" id="button_yes" class="btn btn--destructive">Cancel Leave Request</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </dialog>
+  </body>
+</html>

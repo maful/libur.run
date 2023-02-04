@@ -1,0 +1,31 @@
+en:
+  activerecord:
+    attributes:
+      leave/approval_status:
+        pending: "Pending"
+        approved: "Approved"
+        denied: "Denied"
+        canceled: "Canceled"
+        taken: "Taken"
+      role/description:
+        employee: "Basic role of you team member who has worked in your company and don't have any other role."
+        executive: "Chief-level members like CMO, COO, etc."
+        manager: "A team member who will manage other members and provide leave approvals."
+        user: "Default role and all users will have this role"
+      marital_status/status:
+        single: "Single"
+        married: "Married"
+        divorced: "Divorced"
+        widowed: "Widowed"
+        not_to_say: "Prefer not to say"
+      religion/name:
+        islam: "Islam"
+        christianity: "Christianity"
+        hinduism: "Hinduism"
+        buddhism: "Buddhism"
+        judaism: "Judaism"
+        sikhism: "Sikhism"
+        jainism: "Jainism"
+        shinto: "Shinto"
+        other: "Other"
+        not_to_say: "Prefer not to say"

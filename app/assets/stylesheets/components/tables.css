@@ -1,0 +1,45 @@
+.table {
+  @apply w-full;
+
+  thead {
+    @apply border-b border-gray-200 bg-gray-50;
+
+    tr th {
+      @apply py-3 px-6 text-left text-xs font-medium uppercase text-gray-600;
+    }
+  }
+
+  tbody {
+    tr {
+      @apply border-b border-gray-200 bg-white;
+
+      td {
+        @apply py-4 px-6 text-left text-sm font-normal text-gray-600;
+      }
+    }
+  }
+
+  &--small {
+    thead {
+      tr th {
+        @apply py-2 px-4 font-normal;
+      }
+    }
+
+    tbody {
+      tr {
+        td {
+          @apply py-2 px-4 text-xs;
+        }
+      }
+    }
+  }
+
+  &--hoverable {
+    tbody {
+      tr {
+        @apply hover:bg-gray-50;
+      }
+    }
+  }
+}

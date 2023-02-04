@@ -1,0 +1,58 @@
+<%= simple_form_for(@claim_group, url: claims_path, wrapper: :default, html: {
+  id: dom_id(@claim_group, "form"),
+  class: "form flex flex-col gap-5",
+  data: { controller: "claims--form" }
+}) do |f| %>
+  <template data-claims--form-target="template">
+    <%= f.simple_fields_for :claims, Claim.new(employee_id: current_user.id), child_index: 'NEW_RECORD' do |claim_field| %>
+      <%= render "claim_form", f: claim_field %>
+    <% end %>
+  </template>
+
+  <%= f.input :name, label: "Claim name",
+                     placeholder: "Type clear name to grouping your expenses",
+                     input_html: { class: "w-full" } %>
+  <hr class="h-px border-0 bg-gray-300" />
+  <div class="flex gap-5">
+    <%# form %>
+    <div class="flex flex-col gap-4 w-4/12" data-claims--form-target="targetForm">
+      <div class="flex">
+        <button type="button" class="btn btn--secondary-color btn--small" data-action="claims--form#add">Add claim</button>
+      </div>
+    </div>
+    <div class="flex-1">
+      <table class="table table--small">
+        <thead>
+          <tr>
+            <th scope="col" class="w-1/12"></th>
+            <th scope="col" class="w-3/12">Date</th>
+            <th scope="col" class="w-5/12">Type</th>
+            <th scope="col" class="w-3/12">Amount ($)</th>
+          </tr>
+        </thead>
+        <tbody data-claims--form-target="table">
+          <%= f.simple_fields_for :claims do |claim_field| %>
+            <tr id="row_<%= claim_field.index + 1 %>">
+              <td>
+                <button type="button" id="button_claim_<%= claim_field.index + 1 %>" data-action="claims--form#remove">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+                </button>
+              </td>
+              <td><%= claim_field.object.issue_date %></td>
+              <td>
+                <%= @claim_types.select { |v| v.id == claim_field.object.claim_type_id.to_i }.try(:first).try(:name) %>
+              </td>
+              <td style="text-align: right;"><%= humanized_money(claim_field.object.amount) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <%# hidden %>
+  <div class="sr-only" data-claims--form-target="result">
+    <%= f.simple_fields_for :claims do |claim_field| %>
+      <%= render "claim_form", f: claim_field %>
+    <% end %>
+  </div>
+<% end %>

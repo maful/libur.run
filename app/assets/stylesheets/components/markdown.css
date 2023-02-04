@@ -1,0 +1,11 @@
+.markdown {
+  @apply prose max-w-full prose-p:text-base prose-p:font-normal prose-p:text-gray-600 prose-a:text-primary-600 prose-a:no-underline prose-a:hover:text-primary-700;
+
+  :where(p):not(:where([class~="not-prose"] *)):first-child {
+    @apply mt-0;
+  }
+
+  :where(p):not(:where([class~="not-prose"] *)):last-child {
+    @apply mb-0;
+  }
+}

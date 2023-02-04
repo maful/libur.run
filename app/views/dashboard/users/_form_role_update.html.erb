@@ -1,0 +1,30 @@
+<% user.assignments.each do |assignment| %>
+  <%= f.simple_fields_for :assignments, assignment do |fm| %>
+    <% role = roles.find { |r| fm.object.role_id == r.id } %>
+    <% if role.present? %>
+      <% disabled_checkbox = [Role::ROLE_USER, Role::ROLE_ADMIN].include?(role.name) %>
+      <div class="checkbox">
+        <%= fm.check_box :role_id, { class: "checkbox__input", disabled: disabled_checkbox }, fm.object.role_id %>
+        <div class="checkbox__body">
+          <%= fm.label :role_id, role.name.humanize, class: "checkbox__label" %>
+          <p class="checkbox__help"><%= Role.human_attribute_name("description.#{role.name}") %></p>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+
+<% unless user.is_admin? %>
+  <% role_ids = user.assignments.pluck(:role_id) %>
+  <% roles.select { |r| !role_ids.include?(r.id) }.each do |role| %>
+    <%= f.simple_fields_for :assignments, Assignment.new do |fm| %>
+      <div class="checkbox">
+        <%= fm.check_box :role_id, { class: "checkbox__input" }, role.id %>
+        <div class="checkbox__body">
+          <%= fm.label role.name.humanize, class: "checkbox__label" %>
+          <p class="checkbox__help"><%= Role.human_attribute_name("description.#{role.name}") %></p>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

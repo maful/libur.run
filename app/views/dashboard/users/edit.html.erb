@@ -1,0 +1,30 @@
+<% breadcrumb :edit_user, user: @user %>
+
+<%= render PageHeaderComponent.new(title: "Update User") do |c| %>
+  <% c.with_supporting_text { "Update your team member information." } %>
+
+  <% c.with_actions do %>
+    <%= link_to "Back", users_path, class: "btn btn--secondary-gray btn--small" %>
+  <% end %>
+<% end %>
+
+<div class="tabs">
+  <div class="tabs__list" role="tablist">
+    <div class="tabs__item" role="presentation">
+      <a href="#about" class="tabs__link">About</a>
+    </div>
+    <div class="tabs__item" role="presentation">
+      <a href="#personal" class="tabs__link">Personal Info</a>
+    </div>
+    <div class="tabs__item" role="presentation">
+      <a href="#address" class="tabs__link">Address</a>
+    </div>
+    <div class="tabs__item" role="presentation">
+      <a href="#work" class="tabs__link">Work</a>
+    </div>
+    <div class="tabs__item" role="presentation">
+      <a href="#payment" class="tabs__link">Payment</a>
+    </div>
+  </div>
+  <%= render partial: "form", locals: { user: @user, form_path: @form_path, form_method: @form_method } %>
+</div>

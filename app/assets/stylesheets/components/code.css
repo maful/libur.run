@@ -1,0 +1,3 @@
+.code {
+  @apply rounded-[4px] border border-gray-200/75 bg-gray-100/75 px-1 text-sm;
+}

@@ -1,0 +1,39 @@
+dialog:not([open]) {
+  @apply hidden;
+}
+
+.dialog {
+  @apply flex items-center justify-center rounded-lg bg-white p-0;
+
+  &__container {
+    @apply mx-auto w-[28rem] overflow-hidden shadow-xl;
+  }
+
+  &__body {
+    @apply relative w-full p-6;
+  }
+
+  &__content {
+    @apply flex gap-4;
+  }
+
+  &__featured-icon {
+    @apply flex h-10 w-10 items-center justify-center rounded-full bg-red-100 text-red-500;
+  }
+
+  &__text {
+    @apply flex-1;
+  }
+
+  &__title {
+    @apply text-lg font-medium text-gray-900;
+  }
+
+  &__supporting-text {
+    @apply mt-2 text-sm text-gray-500;
+  }
+
+  &__actions {
+    @apply mt-6 flex justify-end gap-3;
+  }
+}

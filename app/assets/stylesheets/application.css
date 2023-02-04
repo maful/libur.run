@@ -1,0 +1,11 @@
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+@import "./components/components.css";
+@import "@toast-ui/calendar/dist/toastui-calendar.min.css";
+@import "./action_markdown_toolbar.css";
+@import "./tippy.css";
+
+@import "tailwindcss/utilities";
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");

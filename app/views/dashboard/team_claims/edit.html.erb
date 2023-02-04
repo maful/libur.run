@@ -1,0 +1,17 @@
+<%= render(ModalComponent.new) do |c| %>
+  <% c.with_header(title: I18n.t("dashboard.team_claims.form.#{@type}.title"), icon: "bolt") do |ch| %>
+    <% ch.with_supporting_text { I18n.t("dashboard.team_claims.form.#{@type}.subtitle") } %>
+  <% end %>
+
+  <% c.with_body do %>
+    <%= render partial: "form" %>
+  <% end %>
+
+  <% c.with_footer do %>
+    <%= button_tag form: dom_id(@claim_group, "form_approval"),
+                   class: ["btn", { "btn--primary": @type == "approve",
+                                    "btn--destructive": @type == "reject" }] do %>
+      <%= I18n.t("dashboard.team_claims.form.#{@type}.button") %>
+    <% end %>
+  <% end %>
+<% end %>

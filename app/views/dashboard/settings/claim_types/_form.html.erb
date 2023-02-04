@@ -1,0 +1,17 @@
+<%= simple_form_for(@claim_type, method: @form_method, url: @form_path, wrapper: :default, html: {
+  class: "form flex flex-col gap-4"
+}) do |f| %>
+  <%= f.input :name, input_html: { class: "w-2/4" } %>
+  <%= f.input :description, as: :text, input_html: { class: "w-2/4" } %>
+  <div class="flex gap-2">
+    <%= f.label :status, class: "relative inline-flex cursor-pointer items-center" do %>
+      <%= f.input_field :status, type: "checkbox", class: "peer sr-only" %>
+      <div class="h-5 w-9 rounded-full bg-gray-100 after:absolute after:top-0.5 after:left-0.5 after:h-4 after:w-4 after:rounded-full after:bg-white after:shadow after:transition-all after:content-[''] hover:bg-gray-200 peer-checked:bg-primary-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-4 peer-focus:ring-primary-200 peer-disabled:cursor-not-allowed peer-disabled:bg-gray-100 peer-disabled:after:bg-gray-50"></div>
+    <% end %>
+    <span class="text-sm font-medium text-gray-700">Status</span>
+  </div>
+  <div class="flex gap-2 mt-3">
+    <%= f.submit class: "btn btn--primary btn--small" %>
+    <%= link_to "Cancel", settings_claim_types_path, class: "btn btn--secondary-gray btn--small" %>
+  </div>
+<% end %>

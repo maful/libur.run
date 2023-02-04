@@ -1,0 +1,31 @@
+.badge {
+  @apply rounded-2xl py-[2px] px-2.5 text-center text-sm font-medium;
+
+  &--success {
+    @apply bg-success-50 text-success-700 mix-blend-multiply;
+  }
+
+  &--error {
+    @apply bg-error-50 text-error-700 mix-blend-multiply;
+  }
+
+  &--warning {
+    @apply bg-warning-50 text-warning-700 mix-blend-multiply;
+  }
+
+  &--gray {
+    @apply bg-gray-100 text-gray-700 mix-blend-multiply;
+  }
+
+  &--outline-indigo {
+    @apply border-[1.5px] border-indigo-600 bg-transparent text-indigo-700;
+  }
+
+  &--small {
+    @apply py-[2px] px-2 text-xs;
+  }
+
+  &--large {
+    @apply py-1 px-3;
+  }
+}

@@ -1,0 +1,75 @@
+<%= render(ModalComponent.new(size: :large)) do |c| %>
+  <% c.with_header(title: "Claim Details", icon: "bolt") do |ch| %>
+    <% ch.with_supporting_text { "View and track the status of your submitted claim." } %>
+  <% end %>
+
+  <% c.with_body do %>
+    <div class="list-group">
+      <ul class="list-group__item">
+        <li class="list-group__label">ID</li>
+        <li class="list-group__value"><%= @claim_group.public_id %></li>
+      </ul>
+      <ul class="list-group__item">
+        <li class="list-group__label">Name</li>
+        <li class="list-group__value"><%= @claim_group.name %></li>
+      </ul>
+      <ul class="list-group__item">
+        <li class="list-group__label">Submitted</li>
+        <li class="list-group__value"><%= @claim_group.submission_at %></li>
+      </ul>
+      <ul class="list-group__item">
+        <li class="list-group__label">Status</li>
+        <li class="list-group__value">
+          <%= render BadgeComponent.new(title: @claim_group.approval_status.humanize, status: @claim_group.status_badge, size: :small) %>
+        </li>
+      </ul>
+      <ul class="list-group__item">
+        <li class="list-group__label">Total amount</li>
+        <li class="list-group__value"><%= humanized_money_with_symbol(@claim_group.total_amount) %></li>
+      </ul>
+      <table class="table table--small">
+        <thead>
+          <tr>
+            <th scope="col" class="w-3/12">Issue Date</th>
+            <th scope="col" class="w-3/12">Type</th>
+            <th scope="col" class="w-3/12">Note</th>
+            <th scope="col" class="w-2/12">Receipt</th>
+            <th scope="col" class="w-1/12">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @claims.each do |claim| %>
+            <tr>
+              <td><%= claim.issued_at %></td>
+              <td><%= claim.claim_type.name %></td>
+              <td><%= claim.note %></td>
+              <td>
+                <% if claim.receipt.attached? %>
+                  <%= link_to "Download", rails_blob_path(claim.receipt, disposition: "attachment"), class: "text-primary-500 hover:text-primary-700" %>
+                <% else %>
+                  -
+                <% end %>
+              </td>
+              <td style="text-align: right;"><%= humanized_money_with_symbol(claim.amount) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+
+  <% c.with_footer do %>
+    <% if @claim_group.pending? %>
+      <%= button_to cancel_claim_path(@claim_group), method: :patch,
+                                                     form: { data: {
+                                                       turbo_confirm: "Are you sure you want to cancel your submitted claim? This action cannot be undone.",
+                                                       turbo_title: "Confirmation",
+                                                       turbo_button_text: "Cancel Claim",
+                                                       action: "modal#close" }
+                                                     },
+                                                     class: "btn btn--destructive" do %>
+        Cancel Claim
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

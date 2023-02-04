@@ -1,0 +1,25 @@
+<%= render(ModalComponent.new) do |c| %>
+  <% c.with_header(title: "Apply Leave", icon: "bolt") do |ch| %>
+    <% ch.with_supporting_text {
+      ["Don't burn out - Apply for leave and come back refreshed.",
+      "Take a break and come back refreshed",
+      "Refresh your mind and body with a well-deserved leave",
+      "Rest and recharge - Apply for leave today",
+      "Time away from work can boost your productivity - Apply for leave now",].sample
+    } %>
+  <% end %>
+
+  <% c.with_body do %>
+    <% if current_user.manager.present? %>
+      <%= render partial: "form" %>
+    <% else %>
+      <%= render AlertComponent.new do %>
+        Your manager needs to be assigned before you can submit your leave request. Please reach out to HR to get this resolved.
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <% c.with_footer do %>
+    <%= button_tag "Submit", form: dom_id(@leave, "form"), class: "btn btn--primary" if current_user.manager.present? %>
+  <% end %>
+<% end %>

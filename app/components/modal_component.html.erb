@@ -1,0 +1,17 @@
+<%= turbo_frame_tag "turbo_modal" do %>
+  <div
+    tabindex="-1"
+    aria-hidden="true"
+    class="modal"
+    data-controller="modal"
+    data-action="turbo-modal:show@document->modal#open turbo-modal:close@document->modal#close"
+  >
+    <%= tag.div class: ["modal__container", "modal--centered", size_class] do %>
+      <div class="modal__content">
+        <%= header %>
+        <%= body %>
+        <%= footer %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

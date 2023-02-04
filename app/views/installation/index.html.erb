@@ -1,0 +1,29 @@
+<% content_for :header_title, "Introduction" %>
+<% content_for :header_subtitle, "Welcome to Libur.run: Next-Gen Open Source Self-Serve HR Platform" %>
+
+<div class="content__body text-gray-700 font-normal text-base" id="installation_body">
+  <p>Welcome to Libur.run, a next-gen open source self-serve HR platform! Our aim is to empower HR teams with a powerful and intuitive platform that streamlines HR processes and makes it easier to manage employee information, leaves, claims, and more.</p>
+  <p>Built with the latest technology and user-centric design, Libur.run delivers a seamless and enjoyable experience for HR teams and employees alike. Our platform is fully customizable and configurable, allowing you to easily adapt it to your organization's specific needs and requirements. Whether you are a small or large organization, Libur.run provides the flexibility, scalability, and affordability you need to succeed.</p>
+  <p>Get started today and experience the difference that Libur.run can make in your HR operations!</p>
+
+  <div class="w-full flex flex-col gap-2.5 items-start">
+    <a href="https://libur.run" target="_blank" class="btn btn--link-color" rel="noopener noreferrer">
+      Visit our website
+    </a>
+    <a href="https://twitter.com/LiburRun" target="_blank" class="btn btn--link-color" rel="noopener noreferrer">
+      Twitter
+    </a>
+    <a href="https://github.com/maful/libur.run" target="_blank" class="btn btn--link-color" rel="noopener noreferrer">
+      Github
+    </a>
+  </div>
+</div>
+
+<div class="w-full" id="installation_actions">
+  <div class="flex justify-end">
+    <%= button_to license_installation_index_path, class: "btn btn--primary" do %>
+      Next
+      <%= inline_svg_tag "icons/arrow-right.svg", class: "h-5 w-5" %>
+    <% end %>
+  </div>
+</div>

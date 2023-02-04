@@ -1,0 +1,66 @@
+<header>
+  <nav class="main-nav" aria-label="Main">
+    <div class="main-nav__container">
+      <div class="main-nav__navigation">
+        <div class="flex-shrink-0">
+          <%= link_to home_path, class: "flex items-center" do %>
+            <%= inline_svg_tag "logo.svg", class: "fill-current h-8" %>
+          <% end %>
+        </div>
+        <div class="block" id="mobile-menu-2">
+          <ul class="navbar">
+            <%= render NavbarLinkComponent.new(title: "Dashboard", path: home_path) %>
+            <%= render NavbarLinkComponent.new(title: "Users", path: users_path, only_for: [:admin]) %>
+            <li>
+              <%= render(ButtonDropdownComponent.new(text: "Leaves", type: :navbar, direction: :left)) do |c| %>
+                <% c.with_links([
+                  { name: "My Leaves", href: leaves_path, hide: current_user.is_admin? },
+                  { name: "Team Leave Requests", href: team_leaves_path, hide: !(current_user.is_manager? || current_user.is_admin?) },
+                ]) %>
+              <% end %>
+            </li>
+            <li>
+              <%= render(ButtonDropdownComponent.new(text: "Claims", type: :navbar, direction: :left)) do |c| %>
+                <% c.with_links([
+                  { name: "My Claims", href: claims_path, hide: current_user.is_admin? },
+                  { name: "Team Claims", href: team_claims_path, hide: !(current_user.is_admin? || (current_user.id == current_company.finance_approver_id)) },
+                ]) %>
+              <% end %>
+            </li>
+            <%= render NavbarLinkComponent.new(title: "Reports", path: reports_path, only_for: [:admin, :manager]) %>
+          </ul>
+        </div>
+      </div>
+      <div class="relative inline-block" data-controller="dropdown">
+        <button type="button" data-action="dropdown#toggle click@window->dropdown#hide" class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false">
+          <span class="sr-only">Open user menu</span>
+          <% if current_user.avatar.present? %>
+            <%= image_tag current_user.avatar.variant(:thumb), class: "w-8 h-8 rounded-full" %>
+          <% else %>
+            <%= inline_svg_tag "icons/user-circle-solid.svg", class: "w-8 h-8 rounded-full bg-primary-500 text-white" %>
+          <% end %>
+        </button>
+        <!-- Dropdown menu -->
+        <div
+          data-dropdown-target="menu"
+          class="hidden transition transform origin-top-right absolute right-0 z-10 mt-2 w-48 divide-y divide-gray-100 rounded-lg border border-gray-100 bg-white text-left text-sm shadow-lg"
+          data-transition-enter-from="fade-enter-from"
+          data-transition-enter-to="fade-enter-to"
+          data-transition-leave-from="fade-leave-from"
+          data-transition-leave-to="fade-leave-to"
+        >
+          <div class="p-1">
+            <%= link_to settings_root_path, class: "flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100" do %>
+              <%= inline_svg_tag "icons/settings.svg", class: "h-4 w-4" %>
+              Settings
+            <% end %>
+            <%= button_to rodauth.logout_path, method: :post, form: { "data-turbo": false }, class: "flex w-full items-center gap-2 rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100" do %>
+              <%= inline_svg_tag "icons/sign-out.svg", class: "h-4 w-4" %>
+              <%= rodauth.logout_button %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

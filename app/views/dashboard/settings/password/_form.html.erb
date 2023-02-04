@@ -1,0 +1,21 @@
+<%= simple_form_for(@account, method: :patch, url: settings_password_path, wrapper: :default, html: {
+  id: dom_id(@account, "form"),
+  class: "form flex-1"
+}) do |f| %>
+  <div class="tabs__body">
+    <div class="tabs__section">
+      <div class="section-header section-header--divider">
+        <h3 class="section-header__title">Password</h3>
+        <span class="section-header__help">Please enter your current password to change your password.</span>
+      </div>
+      <div class="flex flex-col gap-5">
+        <%= f.input :current_password, label: "Current password", input_html: { class: "w-96" } %>
+        <%= f.input :new_password, label: "New password", hint: "Your new password must be more than 8 characters.", input_html: { class: "w-96" } %>
+        <%= f.input :new_password_confirmation, label: "Confirm new password", input_html: { class: "w-96" } %>
+      </div>
+    </div>
+    <div class="tabs__footer tabs__footer--divider">
+      <%= f.button :submit, "Update password", class: "btn btn--primary" %>
+    </div>
+  </div>
+<% end %>

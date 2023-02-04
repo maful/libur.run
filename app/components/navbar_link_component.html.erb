@@ -1,0 +1,11 @@
+<%= tag.li class: {
+  "navbar__item": true,
+  "navbar__item--active": @active
+} do %>
+  <div class="flex flex-row items-center gap-3">
+    <% if @show_dot %>
+      <div class="navbar__dot"></div>
+    <% end %>
+    <%= link_to @title, @path %>
+  </div>
+<% end %>

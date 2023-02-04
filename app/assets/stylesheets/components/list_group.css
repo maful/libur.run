@@ -1,0 +1,41 @@
+.list-group {
+  @apply flex flex-col gap-4;
+
+  &__item {
+    @apply flex flex-row gap-2.5;
+  }
+
+  &__label {
+    @apply w-36 text-base font-medium text-gray-900;
+  }
+
+  &__value {
+    @apply flex-1 text-base font-normal text-gray-600;
+  }
+}
+
+.list {
+  @apply flex flex-col;
+
+  &__item {
+    @apply flex flex-row py-5 px-6;
+
+    &--striped {
+      @apply rounded-xl bg-gray-50;
+    }
+  }
+
+  &__label {
+    @apply w-60 text-base text-gray-900;
+
+    &--full {
+      @apply flex-1;
+    }
+  }
+
+  &--striped {
+    .list__item {
+      @apply odd:rounded-xl odd:bg-gray-50;
+    }
+  }
+}

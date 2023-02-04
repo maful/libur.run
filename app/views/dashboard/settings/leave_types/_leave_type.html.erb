@@ -1,0 +1,12 @@
+<%= turbo_frame_tag "leave_type_#{leave_type.public_id}" do %>
+  <div class="flex gap-2 py-3 px-3 items-center group/item hover:bg-gray-50 hover:rounded-lg">
+    <div class="flex flex-1 flex-col gap-2">
+      <span class="text-base font-medium text-gray-900"><%= leave_type.name %></span>
+      <div class="flex gap-2">
+        <span class="text-sm font-normal text-gray-700"><%= leave_type.days_per_year %> days per year</span>
+        <%= render BadgeComponent.new(title: leave_type.status_title, status: leave_type.status_badge, size: :small) %>
+      </div>
+    </div>
+    <%= link_to "Edit", edit_settings_leave_type_path(leave_type), data: { turbo_frame: dom_class(LeaveType, "form") }, class: "group/edit btn btn--small btn--secondary-gray invisible group-hover/item:visible" %>
+  </div>
+<% end %>

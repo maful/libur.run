@@ -1,0 +1,30 @@
+.breadcrumb {
+  &__list {
+    @apply flex list-none flex-row items-center gap-3;
+
+    li + li:before {
+      @apply pr-3 text-gray-300;
+      content: "/\00a0";
+    }
+  }
+
+  &__item {
+    @apply inline;
+
+    a {
+      @apply text-sm font-normal text-gray-600;
+
+      &:hover {
+        @apply text-gray-800;
+      }
+
+      &:focus {
+        @apply text-gray-600;
+      }
+    }
+
+    &--current {
+      @apply text-sm font-medium text-primary-700;
+    }
+  }
+}

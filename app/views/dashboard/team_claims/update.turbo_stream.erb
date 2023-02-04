@@ -1,0 +1,7 @@
+<%= turbo_stream.reload_turbo_frame "team-claim-groups-list", src: team_claims_path %>
+<%= turbo_stream
+  .invoke("document.dispatchEvent", args: ["turbo-modal:close"])
+  .invoke(
+    "document.dispatchEvent",
+    args: ["turbo-notification:show", { detail: { message: @message } }],
+  ) %>

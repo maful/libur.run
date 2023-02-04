@@ -1,0 +1,3 @@
+.datepicker-cell.disabled {
+  @apply cursor-default select-none text-gray-200;
+}

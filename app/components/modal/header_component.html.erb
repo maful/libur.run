@@ -1,0 +1,17 @@
+<div class="modal__header">
+  <div class="flex flex-row items-start pt-6 pb-0 px-6 gap-4">
+    <div class="modal__featured-icon">
+      <%= inline_svg_tag "icons/#{icon}", class: "w-6 h-6 stroke-gray-700" %>
+    </div>
+    <div class="modal__header-text">
+      <h1 class="modal__title"><%= title %></h1>
+      <% if supporting_text? %>
+        <p class="modal__help"><%= supporting_text %></p>
+      <% end %>
+    </div>
+  </div>
+  <button type="button" data-action="modal#close" class="modal__close-button">
+    <%= inline_svg_tag "icons/x-close", class: "stroke-gray-500 h-4 w-4" %>
+    <span class="sr-only">Close modal</span>
+  </button>
+</div>

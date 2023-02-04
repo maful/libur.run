@@ -1,0 +1,55 @@
+<%= turbo_stream.update "modal_title", "User details" %>
+<%= turbo_stream.update "modal_body" do %>
+  <div class="container p-6 space-y-4">
+    <ul class="list-group list-group--horizontal">
+      <li class="list-group__item col-span-3 font-medium">ID</li>
+      <li class="list-group__item col-span-9">
+        <span class="code"><%= @user.public_id %></span>
+      </li>
+    </ul>
+    <ul class="list-group list-group--horizontal">
+      <li class="list-group__item col-span-3 font-medium">Name</li>
+      <li class="list-group__item col-span-9"><%= @user.name %></li>
+    </ul>
+    <ul class="list-group list-group--horizontal">
+      <li class="list-group__item col-span-3 font-medium">Email</li>
+      <li class="list-group__item col-span-9">
+        <%= mail_to @account.email, class: "underline" %>
+        <div class="mt-2 flex flex-row space-x-2 items-center">
+          <%= render BadgeComponent.new(title: @account.status.humanize, status: @account.status_badge) %>
+          <% if @account.unverified? %>
+            <%= button_to "Resend", resend_invitation_user_path, method: :patch, class: "underline" %>
+          <% end %>
+        </div>
+      </li>
+    </ul>
+    <ul class="list-group list-group--horizontal">
+      <li class="list-group__item col-span-3 font-medium">Position</li>
+      <li class="list-group__item col-span-9"><%= @employment.position || "-" %></li>
+    </ul>
+    <ul class="list-group list-group--horizontal">
+      <li class="list-group__item col-span-3 font-medium">Experience</li>
+      <li class="list-group__item col-span-9">
+        <%= @employment.total_experience %>
+        (<%= @employment.joined_at %>)
+      </li>
+    </ul>
+    <ul class="list-group list-group--horizontal">
+      <li class="list-group__item col-span-3 font-medium">Status</li>
+      <li class="list-group__item col-span-9">
+        <%= render BadgeComponent.new(title: @employment.state.humanize, status: @employment.state_badge) %>
+      </li>
+    </ul>
+    <ul class="list-group list-group--horizontal">
+      <li class="list-group__item col-span-3 font-medium">Roles</li>
+      <li class="list-group__item col-span-9">
+        <div class="space-x-2">
+          <% @user.roles_name.map(&:humanize).each do |r| %>
+            <%= render BadgeComponent.new(title: r) %>
+          <% end %>
+        </div>
+      </li>
+    </ul>
+  </div>
+<% end %>
+<%= turbo_stream.invoke "document.dispatchEvent", args: ["turbo-modal:show"] %>

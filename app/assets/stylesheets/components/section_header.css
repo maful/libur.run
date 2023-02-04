@@ -1,0 +1,15 @@
+.section-header {
+  @apply flex flex-col gap-1;
+
+  &__title {
+    @apply scroll-m-4 text-lg font-medium text-gray-900;
+  }
+
+  &__help {
+    @apply text-base font-normal text-gray-600;
+  }
+
+  &--divider {
+    @apply border-b border-gray-200 pb-5;
+  }
+}

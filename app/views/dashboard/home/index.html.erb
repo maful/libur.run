@@ -1,0 +1,9 @@
+<%= render PageHeaderComponent.new(title: current_company.name, show_breadcrumb: false) do |c| %>
+  <% c.with_supporting_text do %>
+    Welcome back, <%= current_user.name %>
+  <% end %>
+<% end %>
+
+<%= turbo_frame_tag "calendar_events", src: calendar_path, loading: "lazy" do %>
+  <p>Fetching calendar...</p>
+<% end %>

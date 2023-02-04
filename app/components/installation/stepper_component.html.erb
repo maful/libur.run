@@ -1,0 +1,19 @@
+<div class="stepper">
+  <% STEPS.each_with_index do |step, i| %>
+    <%= tag.div class: class_names("stepper__item", { "stepper__item--current": current_step == i }, { "stepper__item--complete": current_step > i }) do %>
+      <div class="connector">
+        <div class="dot">
+          <div class="dot__icon"></div>
+        </div>
+
+        <% if i < (STEPS.length - 1)  %>
+          <div class="connector__line"></div>
+        <% end %>
+      </div>
+      <div class="stepper__text">
+        <span class="stepper__title"><%= step[:title] %></span>
+        <span class="stepper__subtitle"><%= step[:subtitle] %></span>
+      </div>
+    <% end %>
+  <% end %>
+</div>

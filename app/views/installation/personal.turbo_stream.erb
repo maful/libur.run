@@ -1,0 +1,21 @@
+<%= turbo_stream.update "installation_title", "Personal Information" %>
+<%= turbo_stream.update "installation_subtitle", "Setting Up Admin Account: Entering Your Details" %>
+<%= turbo_stream.update "installation_body" do %>
+  <%= render "personal_form" %>
+<% end %>
+<%= turbo_stream.update "installation_actions" do %>
+  <div class="flex justify-between">
+    <%= link_to license_installation_index_path, class: "btn btn--secondary-gray", "data-turbo-method": "post" do %>
+      <%= inline_svg_tag "icons/arrow-left.svg", class: "h-5 w-5" %>
+      Back
+    <% end %>
+
+    <%= button_tag form: dom_id(@employee, "form"), class: "btn btn--primary" do %>
+      Save and Continue
+      <%= inline_svg_tag "icons/arrow-right.svg", class: "h-5 w-5" %>
+    <% end %>
+  </div>
+<% end %>
+<%= turbo_stream.update "installation_stepper" do %>
+  <%= render(Installation::StepperComponent.new(current_step: @current_step)) %>
+<% end %>

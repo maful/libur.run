@@ -1,0 +1,23 @@
+<%= turbo_frame_tag "company_claim_types" do %>
+  <div class="tabs__section">
+    <div class="section-header section-header--divider">
+      <h3 class="section-header__title">Claim Types Management</h3>
+      <span class="section-header__help">Configure and manage the different types of claims available for your team members</span>
+    </div>
+    <div class="flex flex-col gap-5">
+      <div class="flex gap-4">
+        <div class="flex flex-col w-[25rem]">
+          <%= turbo_frame_tag "claim_types" do %>
+            <%= render "empty_state" %>
+            <%= render @claim_types %>
+          <% end %>
+        </div>
+        <div class="flex-1">
+          <%= turbo_frame_tag dom_class(ClaimType, "form") do %>
+            <%= render "link_new" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

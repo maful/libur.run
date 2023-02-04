@@ -1,0 +1,14 @@
+en:
+  dashboard:
+    team_leaves:
+      form:
+        approve:
+          title: "Leave Approval"
+          subtitle: "Please review the details and confirm this leave request, this will notify the employee that the leave request has been approved"
+          button: "Approve"
+          notification: "Leave request approved successfully. Employee has been notified."
+        reject:
+          title: "Leave Rejection"
+          subtitle: "Please provide a reason for rejecting this leave request, the reason will be shared with the employee."
+          button: "Reject"
+          notification: "Leave request has been rejected. Employee has been notified of the reason for rejection."

@@ -1,0 +1,6 @@
+<%= turbo_stream.replace(dom_id(@company, "form"), partial: "dashboard/settings/company/form") %>
+<%= turbo_stream
+  .invoke(
+    "document.dispatchEvent",
+    args: ["turbo-notification:show", { detail: { message: "Company Profile was successfully updated." } }],
+  ) %>

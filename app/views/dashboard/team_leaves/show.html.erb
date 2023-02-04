@@ -1,0 +1,80 @@
+<%= render(ModalComponent.new(size: :large)) do |c| %>
+  <% c.with_header(title: "Leave Details", icon: "bolt") do |ch| %>
+    <% ch.with_supporting_text { "View the details of the leave including start date, end date, and status." } %>
+  <% end %>
+
+  <% c.with_body do %>
+    <div class="list-group">
+      <ul class="list-group__item">
+        <li class="list-group__label">ID</li>
+        <li class="list-group__value"><%= @leave.public_id %></li>
+      </ul>
+      <ul class="list-group__item">
+        <li class="list-group__label">Requestor</li>
+        <li class="list-group__value">
+          <div class="flex flex-col">
+            <span><%= @leave.employee.name %></span>
+            <span><%= @leave.employee.account.email %></span>
+          </div>
+        </li>
+      </ul>
+      <ul class="list-group__item">
+        <li class="list-group__label">Type</li>
+        <li class="list-group__value"><%= @leave.description %></li>
+      </ul>
+      <ul class="list-group__item">
+        <li class="list-group__label">Date</li>
+        <li class="list-group__value"><%= @leave.format_dates %></li>
+      </ul>
+      <ul class="list-group__item">
+        <li class="list-group__label">Note</li>
+        <li class="list-group__value"><%= @leave.note %></li>
+      </ul>
+      <ul class="list-group__item">
+        <li class="list-group__label">Status</li>
+        <li class="list-group__value">
+          <%= render BadgeComponent.new(title: @leave.approval_status_title, status: @leave.approval_status_badge, size: :small) %>
+        </li>
+      </ul>
+      <ul class="list-group__item">
+        <li class="list-group__label">Attachment</li>
+        <li class="list-group__value">
+          <% if @leave.document.attached? %>
+            <%= link_to rails_blob_path(@leave.document, disposition: "attachment"), class: "btn btn--link-color" do %>
+              <%= @leave.document.filename %>
+              <%= inline_svg_tag "icons/arrow-top-right-on-square.svg", class: "stroke-current h-5 w-5" %>
+            <% end %>
+          <% else %>
+              <span class="text-gray-400">No attachment</span>
+          <% end %>
+        </li>
+      </ul>
+      <% if @leave.approved? || @leave.denied? %>
+        <hr class="h-px border-0 bg-gray-200" />
+        <ul class="list-group__item">
+          <li class="list-group__label"><%= @leave.approval_status_title %> at</li>
+          <li class="list-group__value"><%= @leave.approval_date.to_formatted_s(:common_date_time) %></li>
+        </ul>
+        <ul class="list-group__item">
+          <li class="list-group__label">Comment</li>
+          <li class="list-group__value"><%= @leave.comment %></li>
+        </ul>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% c.with_footer do %>
+    <% if @leave.pending? && current_user.is_manager? %>
+      <%= button_to edit_team_leave_path(@leave), method: :get, params: { type: "approve" },
+                                                  form: { data: { turbo_frame: "turbo_modal", action: "modal#close" } },
+                                                  class: "btn btn--primary" do %>
+        Approve Leave Request
+      <% end %>
+      <%= button_to edit_team_leave_path(@leave), method: :get, params: { type: "reject" },
+                                                  form: { data: { turbo_frame: "turbo_modal", action: "modal#close" } },
+                                                  class: "btn btn--destructive" do %>
+        Reject Leave Request
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

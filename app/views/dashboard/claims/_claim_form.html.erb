@@ -1,0 +1,18 @@
+<div
+  data-new-record="<%= f.object.new_record? %>"
+  data-claims--form-target="newClaim"
+  data-object-id="<%= f.index %>"
+  class="flex flex-col gap-4"
+>
+  <%= f.hidden_field :employee_id %>
+  <%= f.association :claim_type, collection: @claim_types,
+                                 input_html: { class: "w-full" },
+                                 prompt: "Choose Claim type",
+                                 wrapper: :vertical_select %>
+  <%= f.input :amount, input_html: { class: "w-full" } %>
+  <%= f.input :issue_date, as: :string,
+                           wrapper_html: { "data-controller": "datepicker" },
+                           input_html: { "data-datepicker-target": "input", class: "w-full" } %>
+  <%= f.input :note, as: :text, input_html: { class: "w-full" } %>
+  <%= f.input :receipt, wrapper: :input_file %>
+</div>

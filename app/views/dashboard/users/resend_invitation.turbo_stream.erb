@@ -1,0 +1,5 @@
+<%= turbo_stream
+  .invoke(
+    "document.dispatchEvent",
+    args: ["turbo-notification:show", { detail: { message: "Invitation email has been sent." } }],
+  ) %>

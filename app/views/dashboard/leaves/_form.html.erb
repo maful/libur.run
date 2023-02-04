@@ -1,0 +1,44 @@
+<%= simple_form_for(@leave, wrapper: :default, html: {
+  id: dom_id(@leave, "form"),
+  class: "form flex flex-col gap-4",
+  data: { controller: "leaves--form", "leaves--form-daterangepicker-outlet": "#leave-dates" }
+}) do |f| %>
+  <% if @leave.errors[:base].any? %>
+    <%= render(AlertComponent.new(dismissable: true, status: :error)) { @leave.errors[:base].first } %>
+  <% end %>
+  <%= f.association :leave_type, collection: @leave_balances,
+                                 label_method: :leave_type_with_balance,
+                                 value_method: :leave_type_id,
+                                 wrapper: :vertical_select,
+                                 input_html: { class: "w-full" },
+                                 prompt: "Select the Leave type" %>
+  <div
+    class="input-group"
+    id="leave-dates"
+    data-controller="daterangepicker"
+    data-daterangepicker-disable-weekend-value="true"
+    data-daterangepicker-min-date-value="<%= Date.current %>"
+  >
+    <%= f.label :start_date, "Leave date(s)", class: "input-group__label" %>
+    <div class="flex items-center gap-4">
+      <%= f.input :start_date, as: :string, label: false, wrapper_html: { class: "flex-1" }, input_html: { class: "w-full" } %>
+      <span class="text-gray-500">to</span>
+      <%= f.input :end_date, as: :string, label: false, wrapper_html: { class: "flex-1" }, input_html: { class: "w-full" } %>
+    </div>
+  </div>
+  <% same_date = f.object.start_date.is_a?(Date) && f.object.start_date.eql?(f.object.end_date) %>
+  <%= tag.div class: ["input-group", { "input-group--hidden": !same_date }],
+              data: { "leaves--form-target": "halfDay" } do %>
+    <%= f.input :half_day_time, as: :radio_buttons,
+                                label: false,
+                                collection: [[nil, "Full-day"], ["AM", "Half-day (AM)"], ["PM", "Half-day (PM)"]],
+                                label_method: :second,
+                                value_method: :first,
+                                error: false %>
+    <%= f.full_error :half_day_time, class: "input-group__error-message" %>
+  <% end %>
+  <%= f.input :note, as: :text, label: "Note",
+                                placeholder: "Additional details for your manager (optional)",
+                                input_html: { class: "w-full", rows: 2 } %>
+  <%= f.input :document, label: "Attachment", wrapper: :input_file %>
+<% end %>

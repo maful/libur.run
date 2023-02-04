@@ -1,0 +1,6 @@
+<%= turbo_stream.replace(dom_id(@user, "form"), partial: "dashboard/settings/me/form") %>
+<%= turbo_stream
+  .invoke(
+    "document.dispatchEvent",
+    args: ["turbo-notification:show", { detail: { message: "Personal Info was successfully updated." } }],
+  ) %>

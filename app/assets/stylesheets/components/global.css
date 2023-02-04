@@ -1,0 +1,3 @@
+.turbo-progress-bar {
+  @apply h-1 bg-primary-500;
+}

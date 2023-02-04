@@ -1,0 +1,135 @@
+<% breadcrumb :team_leaves %>
+
+<%= render PageHeaderComponent.new(title: "Team Leave Requests") do |c| %>
+  <% c.with_supporting_text { "Review and Approve your team members' leave requests" } %>
+<% end %>
+
+<div>
+  <%= turbo_frame_tag "team-leaves-list" do %>
+    <div class="flex flex-row items-center justify-between py-3">
+      <%= search_form_for(@query, url: team_leaves_path, data: { turbo_action: "advance" }, class: "form") do |f| %>
+        <div class="flex flex-row items-center gap-4">
+          <%= render(ButtonFilterComponent.new(label: "Email", value: @filtering_values[:email], size: :large)) do %>
+            <div class="flex flex-col gap-3 p-3">
+              <span class="text-sm font-medium">Filter by Email</span>
+              <div class="flex gap-2 items-center">
+                <label class="text-sm text-gray-700">is equal to</label>
+                <div class="flex-1">
+                  <%= f.search_field :employee_account_email_eq, class: "block rounded-md border-gray-300 text-xs shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 w-full" %>
+                </div>
+              </div>
+              <%= f.submit "Apply", class: "btn btn--block btn--primary btn--extra-small" %>
+            </div>
+          <% end %>
+
+          <%= render(ButtonFilterComponent.new(label: "Leave type", value: @filtering_values[:leave_type], size: :large)) do %>
+            <div class="flex flex-col gap-3 p-3">
+              <span class="text-sm font-medium">Filter by Leave type</span>
+              <div class="flex">
+                <%= f.collection_select :leave_type_id_eq,
+                                        @leave_types, :id, :name,
+                                        { prompt: true },
+                                        class: "block w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50" %>
+              </div>
+              <%= f.submit "Apply", class: "btn btn--block btn--primary btn--extra-small" %>
+            </div>
+          <% end %>
+
+          <%= render(ButtonFilterComponent.new(label: "Status", value: @filtering_values[:status])) do %>
+            <div class="flex flex-col gap-3 p-3">
+              <span class="text-sm font-medium">Filter by Status</span>
+              <%= f.collection_check_boxes :approval_status_in,
+                                           @approval_statuses,
+                                           Proc.new { |c| c.last },
+                                           Proc.new { |c| c.first.humanize },
+                                           include_hidden: false do |b| %>
+                <div class="flex gap-2 items-center">
+                  <%= b.check_box(class: "h-4 w-4 rounded border border-gray-300 bg-white") %>
+                  <%= b.label(class: "text-sm text-gray-700") %>
+                </div>
+              <% end %>
+              <%= f.submit "Apply", class: "btn btn--block btn--primary btn--extra-small" %>
+            </div>
+          <% end %>
+
+          <%= render(ButtonFilterComponent.new(label: "Total days", value: @filtering_values[:days])) do %>
+            <div class="flex flex-col gap-3 p-3">
+              <span class="text-sm font-medium">Filter by Total days</span>
+              <div class="flex flex-col gap-2.5">
+                <%= f.fields_for :c, @days_condition || f.object.send("build_condition") do |c| %>
+                  <%= c.hidden_field :a, name: "query[c][][a][]", value: "number_of_days" %>
+                  <%= c.predicate_select({ only: ["eq", "lt", "gt"], compounds: false },
+                    { name: "query[c][][p]", class: "block w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50" }) %>
+                  <%= f.text_field :v, name: "query[c][][v][]",
+                                       value: c.object.values.first.value,
+                                       class: "block rounded-md border-gray-300 text-xs shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 w-full" %>
+                <% end %>
+              </div>
+              <%= f.submit "Apply", class: "btn btn--block btn--primary btn--extra-small" %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+      <div class="flex flex-row items-center gap-4 p-0">
+        <%= button_to team_leaves_path, method: :get,
+                                        class: "btn btn--link-gray",
+                                        form: { data: { turbo_action: "advance" } },
+                                        disabled: params[:query].blank? do %>
+          <%= inline_svg_tag "icons/x-close", class: "stroke-current h-3 w-3" %>
+          Clear Filters
+        <% end %>
+      </div>
+    </div>
+    <% if @pagy.count > 0 %>
+      <table class="table table--hoverable">
+        <thead>
+          <tr>
+            <th scope="col">Requestor</th>
+            <th scope="col">Date</th>
+            <th scope="col">
+              <div class="flex flex-row gap-1 normal-case" data-tippy="Weekday data only" data-tippy-animate="slide">
+                <span class="uppercase">Description</span>
+                <%= inline_svg_tag "icons/question-mark-circle.svg", class: "text-gray-400 w-4 h-4" %>
+              </div>
+            </th>
+            <th scope="col">Note</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @leaves.decorate.each do |leave| %>
+            <tr>
+              <td>
+                <%= link_to team_leave_path(leave), class: "unstyled-link", data: { turbo_frame: "turbo_modal" } do %>
+                  <div class="flex flex-col items-start">
+                    <span class="text-sm font-normal text-gray-900"><%= leave.employee.name %></span>
+                    <span class="text-sm font-normal text-gray-600"><%= leave.employee.account.email %></span>
+                  </div>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to leave.format_dates, team_leave_path(leave), class: "unstyled-link", data: { turbo_frame: "turbo_modal" } %>
+              </td>
+              <td>
+                <%= link_to leave.description, team_leave_path(leave), class: "unstyled-link", data: { turbo_frame: "turbo_modal" } %>
+              </td>
+              <td>
+                <%= link_to leave.truncate_note, team_leave_path(leave), class: "unstyled-link", data: { turbo_frame: "turbo_modal" } %>
+              </td>
+              <td>
+                <%= link_to team_leave_path(leave), class: "unstyled-link", data: { turbo_frame: "turbo_modal" } do %>
+                  <%= render BadgeComponent.new(title: leave.approval_status_title, status: leave.approval_status_badge, size: :small) %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%== pagy_nav(@pagy) if @pagy.pages > 1 %>
+    <% else %>
+      <%= render EmptyStateComponent.new(title: "No Pending Leave Requests") do |c| %>
+        <% c.with_description { "There are currently no leave requests to be approved by you, check back later or encourage your team members to submit their leave requests." } %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

@@ -1,0 +1,39 @@
+.error-page {
+  @apply flex flex-row items-center justify-center gap-8;
+
+  &__container {
+    @apply flex flex-1 flex-col gap-12 py-0 pl-0 pr-8;
+  }
+
+  &__heading {
+    @apply flex flex-col gap-6;
+  }
+
+  &__text {
+    @apply flex flex-col gap-3;
+  }
+
+  &__sub-title {
+    @apply text-base font-semibold text-primary-700;
+  }
+
+  &__title {
+    @apply text-5xl font-semibold text-gray-900;
+  }
+
+  &__support-text {
+    @apply text-xl font-normal text-gray-600;
+  }
+
+  &__actions {
+    @apply flex flex-row gap-4;
+  }
+
+  &__illustration {
+    @apply flex flex-col items-center justify-center;
+
+    svg {
+      @apply h-[164px] w-[514px];
+    }
+  }
+}

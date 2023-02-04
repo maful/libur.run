@@ -1,0 +1,33 @@
+<% breadcrumb :leaves_summary %>
+
+<%= render PageHeaderComponent.new(title: "Leave Summary") do |c| %>
+  <% c.with_supporting_text { "View your leave history, remaining balance, and upcoming leaves." } %>
+<% end %>
+
+<div class="flex flex-col gap-8">
+  <% @leave_balances.each do |leave_balance| %>
+    <div class="flex flex-row gap-8 items-start">
+      <span class="text-gray-900 text-base font-medium w-[17.5rem] py-5">
+        <%= leave_balance.leave_type.name %>
+      </span>
+      <div class="block flex-1">
+        <div class="list">
+          <div class="list__item list__item--striped">
+            <span class="list__label list__label--full">Entitled</span>
+            <span class="text-gray-600 text-base w-24"><%= pluralize(leave_balance.display_entitled_balance, "day") %></span>
+          </div>
+          <% @leaves.select { |v| v.leave_type_id == leave_balance.leave_type_id }.each do |l| %>
+            <div class="list__item">
+              <span class="list__label list__label--full">Leave taken on <%= l.format_dates %></span>
+              <span class="text-error-700 text-base w-24"><%= l.total_days %></span>
+            </div>
+          <% end %>
+          <div class="list__item list__item--striped">
+            <span class="list__label list__label--full">Remaining</span>
+            <span class="text-gray-600 text-base w-24"><%= pluralize(leave_balance.display_remaining_balance, "day") %></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

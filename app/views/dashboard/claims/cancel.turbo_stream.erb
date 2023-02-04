@@ -1,0 +1,6 @@
+<%= turbo_stream.reload_turbo_frame "claim-groups-list", src: claims_path %>
+<%= turbo_stream
+  .invoke(
+    "document.dispatchEvent",
+    args: ["turbo-notification:show", { detail: { message: "Claim request has been successfully canceled" } }],
+  ) %>

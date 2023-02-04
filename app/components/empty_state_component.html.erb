@@ -1,0 +1,15 @@
+<div class="empty-state">
+  <div class="empty-state__content">
+    <%= inline_svg_tag "illustrations/empty-search.svg", class: "empty-state__illustration" %>
+
+    <div class="empty-state__header">
+      <h1 class="empty-state__title"><%= @title %></h1>
+      <% if description? %>
+        <p class="empty-state__description"><%= description %></p>
+      <% end %>
+    </div>
+  </div>
+  <% if actions? %>
+    <div class="empty-state__actions"><%= actions %></div>
+  <% end %>
+</div>

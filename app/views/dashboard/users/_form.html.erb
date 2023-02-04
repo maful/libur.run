@@ -1,0 +1,116 @@
+<%= simple_form_for(user, as: :user, method: form_method, url: form_path, html: {
+  id: dom_id(user, "form"),
+  class: "form flex-1"
+}) do |f| %>
+  <div class="tabs__body">
+    <div class="tabs__section">
+      <div class="section-header section-header--divider">
+        <h3 class="section-header__title" id="about">About</h3>
+        <span class="section-header__help">Introduction about the user such as skills, experience, etc.</span>
+      </div>
+      <div class="flex flex-col gap-5">
+        <div class="input-group input-group--horizontal">
+          <div class="input-group__text-container">
+            <label class="input-group__label" for="user_manager_id"><%= f.label :about, "Bio" %></label>
+            <span class="input-group__help">Basic markdown syntax supported</span>
+          </div>
+          <div class="input-group__content">
+            <%= f.markdown_field :about, class: "input-group__input w-full", rows: 5 %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tabs__section">
+      <div class="section-header section-header--divider">
+        <h3 class="section-header__title" id="personal">Personal Information</h3>
+        <span class="section-header__help">Specific user information.</span>
+      </div>
+      <div class="flex flex-col gap-5">
+        <%= f.input :identity_number, label: "ID Number", support_text: "Identity Card/NRIC/ID etc", input_html: { class: "w-96" } %>
+        <%= f.input :passport_number, label: "Passport Number", input_html: { class: "w-96" } %>
+        <%= f.input :name, support_text: "Full name of the user", input_html: { class: "w-96" } %>
+        <%= f.simple_fields_for :account, @user.account || @user.build_account, include_id: false do |fe| %>
+          <%= fe.input :email, support_text: "A company email of the user", placeholder: "user@company.com", input_html: { class: "w-96" } %>
+        <% end %>
+        <%= f.input :phone_number, input_html: { class: "w-96" }, support_text: "Current active phone number" %>
+        <%= f.input :birthday, as: :string, placeholder: "Choose birthday date",
+                                wrapper_html: { "data-controller": "datepicker" },
+                                input_html: { "data-datepicker-target": "input" } %>
+        <%= f.input :religion, collection: Employee::RELIGION_LIST.keys,
+                                label_method: Proc.new { |n| Religion.human_attribute_name("name.#{n}") },
+                                support_text: "The religion of the user or prefer not to say",
+                                input_html: { class: "w-96" },
+                                prompt: "Select the Religion" %>
+        <%= f.input :marital_status, collection: Employee::MARITAL_STATUS_LIST.keys,
+                                      label_method: Proc.new { |n| MaritalStatus.human_attribute_name("status.#{n}") },
+                                      label: "Marital Status",
+                                      support_text: "Current marital status",
+                                      input_html: { class: "w-96" },
+                                      prompt: "Select Status" %>
+        <%= f.input :citizenship, as: :country, label: "Citizenship", input_html: { class: "w-96" }, prompt: "Select a Country" %>
+      </div>
+    </div>
+    <div class="tabs__section">
+      <div class="section-header section-header--divider">
+        <h3 class="section-header__title" id="address">Address</h3>
+        <span class="section-header__help">Manage user address to help manager keep in touch.</span>
+      </div>
+      <div class="flex flex-col gap-5">
+        <%= f.simple_fields_for :address, @user.address || @user.build_address, include_id: false do |fe| %>
+          <%= fe.input :line_1, support_text: "Address line 1 (e.g., street, PO Box).", input_html: { class: "w-96" } %>
+          <%= fe.input :line_2, support_text: "Address line 2 (e.g., apartment, suite, unit, or building).", input_html: { class: "w-96" } %>
+          <%= fe.input :city, support_text: "City, district, suburb, town, or village.", input_html: { class: "w-96" } %>
+          <%= fe.input :state, support_text: "State, county, province, or region.", input_html: { class: "w-96" } %>
+          <%= fe.input :country_code, label: "Country", support_text: "Country of residence", input_html: { class: "w-96" }, prompt: "Select a Country" %>
+          <%= fe.input :zip, support_text: "ZIP or postal code.", input_html: { class: "w-40" } %>
+        <% end %>
+      </div>
+    </div>
+    <div class="tabs__section">
+      <div class="section-header section-header--divider">
+        <h3 class="section-header__title" id="work">Work</h3>
+        <span class="section-header__help">Job details to organize user.</span>
+      </div>
+      <div class="flex flex-col gap-5">
+        <%= f.input :position, support_text: "Current position user in the team", placeholder: "e.g. Software Engineer", input_html: { class: "w-96" } %>
+        <%= f.input :country_of_work, label: "Country", support_text: "Country of work, this may differ from the country of residence.", input_html: { class: "w-96" }, prompt: "Select a Country" %>
+        <%= f.input :start_date, as: :string, placeholder: "Choose start date",
+                                  wrapper_html: { "data-controller": "datepicker" },
+                                  input_html: { "data-datepicker-target": "input" },
+                                  support_text: "Normally it's the first day of work" %>
+        <%= f.association :manager, collection: @managers,
+                                    label_method: :name_with_email,
+                                    support_text: "The person who will approve leave requests.",
+                                    input_html: { class: "w-96" },
+                                    prompt: "Select the manager" %>
+        <% unless user.is_admin? %>
+          <div class="input-group input-group--horizontal">
+            <div class="input-group__text-container">
+              <label class="input-group__label" for="user_manager_id">Role</label>
+              <span class="input-group__help">This will be the access that the user have.</span>
+            </div>
+            <div class="input-group__content">
+              <div class="flex flex-col gap-3">
+                <% if user.persisted? %>
+                  <%= render partial: "form_role_update", locals: { roles: @roles, f:, user: } %>
+                <% else %>
+                  <%= render partial: "form_role_create", locals: { roles: @roles, f: } %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="tabs__section">
+      <div class="section-header section-header--divider">
+        <h3 class="section-header__title" id="payment">Payment Information</h3>
+        <span class="section-header__help">Payment, Bank, or Account information to help Finance Team.</span>
+      </div>
+      <span>Coming Soon</span>
+    </div>
+    <div class="tabs__footer tabs__footer--divider">
+      <%= f.button :submit, user.persisted? ? "Update user" : "Invite user", class: "btn btn--primary" %>
+    </div>
+  </div>
+<% end %>

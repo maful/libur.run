@@ -1,0 +1,44 @@
+.tabs {
+  @apply flex flex-row items-start gap-24;
+
+  &__list {
+    @apply flex w-40 flex-col gap-1;
+  }
+
+  &__body {
+    @apply flex flex-1 flex-col gap-12;
+  }
+
+  &__section {
+    @apply flex flex-col gap-6;
+  }
+
+  &__footer {
+    @apply flex flex-row items-center justify-end gap-5;
+
+    &--divider {
+      @apply border-t border-gray-200 pt-5;
+    }
+  }
+
+  &__item {
+    @apply block w-full;
+  }
+
+  &__link {
+    @apply inline-flex w-full cursor-pointer gap-2 rounded-md py-2 px-3 text-sm font-medium text-gray-500;
+
+    &--active {
+      @apply bg-gray-50 text-gray-700;
+    }
+
+    &:hover {
+      @apply bg-gray-50 text-gray-700;
+    }
+  }
+
+  /* TODO */
+  &--horizontal {
+    @apply flex-col gap-8;
+  }
+}

@@ -1,0 +1,100 @@
+.onboarding {
+  .stepper {
+    @apply flex flex-col;
+
+    .connector {
+      @apply flex flex-col items-center pb-1;
+
+      &__line {
+        @apply rounded-sm bg-gray-200;
+        height: 46px;
+        width: 2px;
+      }
+    }
+
+    .dot {
+      @apply flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-200 bg-white;
+
+      &__icon {
+        @apply flex h-2.5 w-2.5 rounded-full bg-gray-200;
+      }
+    }
+
+    &__item {
+      @apply flex items-start gap-4;
+
+      &--current {
+        .dot {
+          @apply border-primary-600 bg-primary-50;
+          box-shadow: 0px 0px 0px 4px #f4ebff;
+
+          &__icon {
+            @apply bg-primary-600;
+          }
+        }
+
+        .stepper__title {
+          @apply text-primary-700;
+        }
+
+        .stepper__subtitle {
+          @apply text-primary-600;
+        }
+      }
+
+      &--complete {
+        .connector__line {
+          @apply bg-primary-600;
+        }
+
+        .dot {
+          @apply border-primary-600 bg-primary-50;
+
+          &__icon {
+            display: block;
+            width: 1rem;
+            height: 1rem;
+            background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2U9IiMxNTVFRUYiPjxwYXRoIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0ibTQuNSAxMi43NSA2IDYgOS0xMy41Ii8+PC9zdmc+Cg==");
+          }
+        }
+      }
+    }
+
+    &__text {
+      @apply flex flex-col;
+      gap: 2px;
+    }
+
+    &__title {
+      @apply text-base font-medium text-gray-700;
+    }
+
+    &__subtitle {
+      @apply text-base font-normal text-gray-600;
+    }
+  }
+
+  .content {
+    @apply w-full flex-1 bg-white;
+
+    &__container {
+      @apply flex flex-col items-center gap-10 px-24 py-16;
+    }
+
+    &__header {
+      @apply flex max-w-md flex-col items-center gap-1 p-0 text-center;
+    }
+
+    &__title {
+      @apply text-2xl font-medium text-gray-900;
+    }
+
+    &__subtitle {
+      @apply text-lg font-normal text-gray-700;
+    }
+
+    &__body {
+      @apply flex w-full flex-col gap-5;
+    }
+  }
+}

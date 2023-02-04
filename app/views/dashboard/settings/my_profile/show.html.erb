@@ -1,0 +1,143 @@
+<% breadcrumb :settings_profile %>
+
+<%= render partial: "dashboard/settings/shared/page_header" %>
+
+<div class="tabs">
+  <%= render partial: "dashboard/settings/shared/navigation" %>
+  <div class="tabs__body">
+    <%= render PageHeaderComponent.new(title: @user.name, show_breadcrumb: false) do |c| %>
+      <% c.with_supporting_text { @account.email } %>
+    <% end %>
+
+    <div class="flex flex-col gap-8">
+      <div class="flex flex-row gap-8 items-start">
+        <span class="text-gray-900 text-base font-medium w-36">About</span>
+        <div class="flex-1 flex flex-col gap-8">
+          <div><%= @user.about %></div>
+          <div class="flex flex-row items-start py-5 px-6 gap-14 bg-gray-50 rounded-xl">
+            <div class="flex flex-col gap-2">
+              <span class="text-gray-500 text-sm">Position</span>
+              <span class="text-gray-700 text-base"><%= @user.position %></span>
+            </div>
+            <div class="flex flex-col gap-2">
+              <span class="text-gray-500 text-sm">Work Experience</span>
+              <span class="text-gray-700 text-base"><%= @user.total_experience %></span>
+            </div>
+            <div class="flex flex-col gap-2">
+              <span class="text-gray-500 text-sm">Age</span>
+              <span class="text-gray-700 text-base"><%= @user.birthday? ? @user.total_age : "-" %></span>
+            </div>
+            <div class="flex flex-col gap-2">
+              <span class="text-gray-500 text-sm">Phone</span>
+              <span class="text-gray-700 text-base"><%= phone_to "1234567890" %></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-row gap-8 items-start">
+        <span class="text-gray-900 text-base font-medium w-36 py-5">Personal Details</span>
+        <div class="block flex-1">
+          <div class="list list--striped">
+            <div class="list__item">
+              <span class="list__label">Citizenship</span>
+              <span class="text-gray-600 text-base flex-1"><%= @user.country_citizenshp %></span>
+            </div>
+            <div class="list__item">
+              <span class="list__label">Identity Card/NRIC/ID etc</span>
+              <span class="text-gray-600 text-base flex-1"><%= @user.identity_number %></span>
+            </div>
+            <div class="list__item">
+              <span class="list__label">Passport No</span>
+              <span class="text-gray-600 text-base flex-1"><%= @user.passport_number %></span>
+            </div>
+            <div class="list__item">
+              <span class="list__label">Marital Status</span>
+              <span class="text-gray-600 text-base flex-1"><%= @user.marital_status_name %></span>
+            </div>
+            <div class="list__item">
+              <span class="list__label">Religion</span>
+              <span class="text-gray-600 text-base flex-1"><%= @user.religion_name %></span>
+            </div>
+            <div class="list__item">
+              <span class="list__label">Birthday</span>
+              <span class="text-gray-600 text-base flex-1">
+                <%= time_tag(@user.birthday, @user.birthday_date) if @user.birthday? %>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% if @address.present? %>
+        <div class="flex flex-row gap-8 items-start">
+          <span class="text-gray-900 text-base font-medium w-36 py-5">Address</span>
+          <div class="block flex-1">
+            <div class="list list--striped">
+              <div class="list__item">
+                <span class="list__label">Line 1</span>
+                <span class="text-gray-600 text-base flex-1"><%= @address.line_1 %></span>
+              </div>
+              <div class="list__item">
+                <span class="list__label">Line 2</span>
+                <span class="text-gray-600 text-base flex-1"><%= @address.line_2 || "-" %></span>
+              </div>
+              <div class="list__item">
+                <span class="list__label">City</span>
+                <span class="text-gray-600 text-base flex-1"><%= @address.city %></span>
+              </div>
+              <div class="list__item">
+                <span class="list__label">State</span>
+                <span class="text-gray-600 text-base flex-1"><%= @address.state %></span>
+              </div>
+              <div class="list__item">
+                <span class="list__label">Country</span>
+                <span class="text-gray-600 text-base flex-1"><%= @address.country_name %></span>
+              </div>
+              <div class="list__item">
+                <span class="list__label">ZIP/Postal Code</span>
+                <span class="text-gray-600 text-base flex-1"><%= @address.zip %></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <div class="flex flex-row gap-8 items-start">
+        <span class="text-gray-900 text-base font-medium w-36 py-5">Work Details</span>
+        <div class="block flex-1">
+          <div class="list list--striped">
+            <div class="list__item">
+              <span class="list__label">Organisation</span>
+              <span class="text-gray-600 text-base flex-1"><%= current_company.name %></span>
+            </div>
+            <div class="list__item">
+              <span class="list__label">Country of Work</span>
+              <span class="text-gray-600 text-base flex-1"><%= @user.country_work_name %></span>
+            </div>
+            <div class="list__item">
+              <span class="list__label">Start Date</span>
+              <span class="flex-1 text-gray-600 text-base"><%= time_tag(@user.start_date, @user.joined_at) if @user.start_date? %></span>
+            </div>
+            <div class="list__item">
+              <span class="list__label">Roles</span>
+              <div class="flex-1 flex gap-2.5">
+                <% @user.assignments.each do |a| %>
+                  <%= render BadgeComponent.new(title: a.role.name.humanize, status: "outline-indigo", size: :small) %>
+                <% end %>
+              </div>
+            </div>
+            <div class="list__item">
+              <span class="list__label">Manager</span>
+              <div class="flex-1 flex flex-col gap-3">
+                <% if @user.manager.present? %>
+                  <div class="flex flex-col">
+                    <span class="text-sm font-medium text-gray-700"><%= @user.manager.name %></span>
+                    <span class="text-sm font-normal text-gray-600"><%= @user.manager.account.email %></span>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

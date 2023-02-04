@@ -1,0 +1,25 @@
+<%# page header %>
+<div class="flex flex-col gap-5">
+  <%# breadcrumb %>
+  <% if @show_breadcrumb %>
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <%= breadcrumbs %>
+    </nav>
+  <% end %>
+  <%# content %>
+  <div class="flex flex-row items-start gap-4">
+    <%# heading %>
+    <div class="flex flex-1 flex-col items-start gap-1">
+      <h1 class="font-semibold text-gray-900 text-3xl"><%= @title %></h1>
+      <% if supporting_text.present? %>
+        <p class="font-normal text-base text-gray-600"><%= supporting_text %></p>
+      <% end %>
+    </div>
+    <%# actions %>
+    <% if actions %>
+      <div class="flex flex-row items-center gap-3">
+        <%= actions %>
+      </div>
+    <% end %>
+  </div>
+</div>

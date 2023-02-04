@@ -1,0 +1,14 @@
+en:
+  dashboard:
+    team_claims:
+      form:
+        approve:
+          title: "Claim Approval"
+          subtitle: "Please review the details and confirm this claim request, this will notify the employee that the claim request has been approved"
+          button: "Approve"
+          notification: "Claim request approved successfully. Employee has been notified."
+        reject:
+          title: "Claim Rejection"
+          subtitle: "Please provide a reason for rejecting this claim request, the reason will be shared with the employee."
+          button: "Reject"
+          notification: "Claim request has been rejected. Employee has been notified of the reason for rejection."

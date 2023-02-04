@@ -1,0 +1,13 @@
+<%= render(ModalComponent.new(size: :large)) do |c| %>
+  <% c.with_header(title: "Submit a Claim", icon: "bolt") do |ch| %>
+    <% ch.with_supporting_text { "Enter the details of your expenses and upload supporting documents" } %>
+  <% end %>
+
+  <% c.with_body do %>
+    <%= render partial: "form" %>
+  <% end %>
+
+  <% c.with_footer do %>
+    <%= button_tag "Submit", form: dom_id(@claim_group, "form"), class: "btn btn--primary" %>
+  <% end %>
+<% end %>

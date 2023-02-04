@@ -1,0 +1,24 @@
+<%= turbo_frame_tag "company_leave_types" do %>
+  <div class="tabs__section">
+    <div class="section-header section-header--divider">
+      <h3 class="section-header__title">Leave Types Configuration</h3>
+      <span class="section-header__help">Configure Available Leave Types for Employees</span>
+    </div>
+    <div class="flex flex-col gap-5">
+      <p class="text-gray-600 text-base font-normal">Please note that new Leave Types added will only be applied to new users. To ensure accurate leave tracking, please configure Leave Types before adding new team members.</p>
+      <div class="flex gap-4">
+        <div class="flex flex-col w-[25rem]">
+          <%= turbo_frame_tag "leave_types" do %>
+            <%= render "empty_state" %>
+            <%= render @leave_types %>
+          <% end %>
+        </div>
+        <div class="flex-1">
+          <%= turbo_frame_tag dom_class(LeaveType, "form") do %>
+            <%= render "link_new" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

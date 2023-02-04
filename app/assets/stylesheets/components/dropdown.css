@@ -1,0 +1,51 @@
+.button-dropdown {
+  @apply relative inline-block;
+
+  &__button {
+    @apply inline-flex items-center gap-2 font-medium;
+  }
+
+  &__text {
+    @apply max-w-[15rem] overflow-hidden text-ellipsis whitespace-nowrap;
+  }
+
+  &__icon {
+    @apply flex;
+
+    svg {
+      @apply h-5 w-5;
+    }
+
+    &--left-position {
+      @apply order-first;
+    }
+
+    &--right-position {
+      @apply order-last;
+    }
+  }
+
+  &__menu {
+    @apply absolute z-10 mt-2 w-48 transform divide-y divide-gray-100 rounded-lg border border-gray-100 bg-white text-left text-sm shadow-lg transition;
+
+    &--left-direction {
+      @apply left-0;
+    }
+
+    &--right-direction {
+      @apply right-0;
+    }
+
+    &--large-size {
+      @apply w-72;
+    }
+  }
+
+  &__links {
+    @apply p-1;
+  }
+
+  &__link {
+    @apply flex w-full items-center rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100;
+  }
+}

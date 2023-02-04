@@ -1,0 +1,12 @@
+<% roles.each do |role| %>
+  <%= f.simple_fields_for :assignments, Assignment.new do |fm| %>
+    <% role_user = role.name == Role::ROLE_USER %>
+    <div class="checkbox">
+      <%= fm.check_box :role_id, { class: "checkbox__input", checked: role_user, disabled: role_user }, role.id %>
+      <div class="checkbox__body">
+        <%= fm.label :role_id, role.name.humanize, class: "checkbox__label" %>
+        <p class="checkbox__help"><%= Role.human_attribute_name("description.#{role.name}") %></p>
+      </div>
+    </div>
+  <% end %>
+<% end %>

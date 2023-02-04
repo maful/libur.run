@@ -1,0 +1,22 @@
+inherit_gem:
+  rubocop-shopify: rubocop.yml
+
+require:
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.1
+  Exclude:
+    - 'db/**/*'
+    - 'bin/**/*'
+
+RSpec/MultipleExpectations:
+  Max: 3
+
+RSpec/ImplicitExpect:
+  EnforcedStyle: should
+
+RSpec/NamedSubject:
+  Enabled: false

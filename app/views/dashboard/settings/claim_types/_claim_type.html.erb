@@ -1,0 +1,16 @@
+<%= turbo_frame_tag "claim_type_#{claim_type.public_id}" do %>
+  <div class="flex gap-2 py-3 px-3 items-center group/item hover:bg-gray-50 hover:rounded-lg">
+    <div class="flex flex-1 flex-col gap-2">
+      <span class="text-base font-medium text-gray-900"><%= claim_type.name %></span>
+      <% if claim_type.description? %>
+        <span class="text-sm font-normal text-gray-700"><%= claim_type.description %></span>
+      <% else %>
+        <span class="text-sm font-normal text-gray-500 italic">No description</span>
+      <% end %>
+      <div>
+        <%= render BadgeComponent.new(title: claim_type.status_title, status: claim_type.status_badge, size: :small) %>
+      </div>
+    </div>
+    <%= link_to "Edit", edit_settings_claim_type_path(claim_type), data: { turbo_frame: dom_class(ClaimType, "form") }, class: "group/edit btn btn--small btn--secondary-gray invisible group-hover/item:visible" %>
+  </div>
+<% end %>

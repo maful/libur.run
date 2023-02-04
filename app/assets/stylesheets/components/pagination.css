@@ -1,0 +1,85 @@
+.pagy-nav,
+.pagy-nav-js {
+  @apply flex items-center justify-end -space-x-px p-5;
+}
+
+.pagy-nav .page a,
+.pagy-nav .page.active,
+.pagy-nav .page.prev.disabled,
+.pagy-nav .page.next.disabled,
+.pagy-nav-js .page a,
+.pagy-nav-js .page.active,
+.pagy-nav-js .page.prev.disabled,
+.pagy-nav-js .page.next.disabled {
+  @apply border border-gray-300 bg-white py-2 px-3 leading-tight text-gray-500;
+
+  &:hover {
+    @apply bg-gray-100 text-gray-700;
+  }
+
+  &:active {
+    @apply bg-gray-400 text-white;
+  }
+}
+
+.pagy-nav .page.prev.disabled,
+.pagy-nav .page.next.disabled,
+.pagy-nav-js .page.prev.disabled,
+.pagy-nav-js .page.next.disabled {
+  @apply cursor-default text-gray-400;
+
+  &:hover {
+    @apply bg-gray-200 text-gray-400;
+  }
+
+  &:active {
+    @apply bg-gray-200 text-gray-400;
+  }
+}
+
+.pagy-nav .page.active,
+.pagy-nav-js .page.active {
+  @apply cursor-default border border-primary-300 bg-primary-50 text-primary-600;
+
+  &:hover {
+    @apply bg-primary-100 text-primary-700;
+  }
+
+  &:active {
+    @apply bg-gray-400 text-white;
+  }
+}
+
+.pagy-combo-nav-js {
+  @apply flex max-w-max rounded-full bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-500 shadow-md;
+}
+
+.pagy-combo-nav-js .pagy-combo-input {
+  @apply rounded-sm bg-white px-2;
+}
+
+.pagy-combo-nav-js .page.prev,
+.pagy-combo-nav-js .page.next {
+  &:hover {
+    @apply text-gray-800;
+  }
+
+  &:active {
+    @apply text-gray-800;
+  }
+}
+
+.pagy-combo-nav-js .page.prev.disabled,
+.pagy-combo-nav-js .page.next.disabled {
+  @apply cursor-default text-gray-400;
+}
+
+.pagy-nav .page.prev.disabled,
+.pagy-nav .page.prev a {
+  @apply rounded-l-lg;
+}
+
+.pagy-nav .page.next.disabled,
+.pagy-nav .page.next a {
+  @apply rounded-r-lg;
+}

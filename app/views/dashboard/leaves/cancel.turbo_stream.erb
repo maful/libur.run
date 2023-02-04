@@ -1,0 +1,6 @@
+<%= turbo_stream.reload_turbo_frame "leaves-list", src: leaves_path %>
+<%= turbo_stream
+  .invoke(
+    "document.dispatchEvent",
+    args: ["turbo-notification:show", { detail: { message: "Leave request has been successfully canceled" } }],
+  ) %>

@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    strategy:
+      fail-fast: true
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:14.3
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_DB: liburrun_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      redis:
+        image: redis:7.0.1
+        ports:
+          - "6379:6379"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.15.1
+          cache: 'yarn'
+
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Run tests
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:password@localhost:5432/liburrun_test
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_CI_MASTER_KEY }}
+        run: |
+          bin/rails javascript:build
+          bin/rails css:build
+          bin/rails db:schema:load
+          bundle exec rspec --profile 10

@@ -1,0 +1,13 @@
+.link {
+  @apply underline;
+}
+
+.unstyled-link {
+  @apply m-0 block h-full w-full cursor-pointer border-0 p-0 text-inherit no-underline outline-0;
+  font-weight: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  font-style: inherit;
+  text-align: inherit;
+  background-color: #0000;
+}

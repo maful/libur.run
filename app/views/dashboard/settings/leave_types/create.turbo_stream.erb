@@ -1,0 +1,9 @@
+<%= turbo_stream.prepend("leave_types", @leave_type.decorate) %>
+<%= turbo_stream.update dom_class(LeaveType, "form") do %>
+  <%= render "link_new" %>
+<% end %>
+<%= turbo_stream
+  .invoke(
+    "document.dispatchEvent",
+    args: ["turbo-notification:show", { detail: { message: @message } }],
+  ) %>

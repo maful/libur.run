@@ -1,0 +1,23 @@
+.alert {
+  @apply flex items-start rounded-md p-4 text-sm;
+
+  &__button {
+    @apply ml-auto;
+  }
+
+  &--error {
+    @apply bg-red-50 text-red-500;
+  }
+
+  &--info {
+    @apply bg-primary-50 text-primary-500;
+  }
+
+  &--success {
+    @apply bg-green-50 text-green-500;
+  }
+
+  &--warning {
+    @apply bg-yellow-50 text-yellow-500;
+  }
+}

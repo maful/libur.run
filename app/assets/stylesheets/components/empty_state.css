@@ -1,0 +1,27 @@
+.empty-state {
+  @apply mx-auto flex max-w-xl flex-col items-center gap-8 pb-2;
+
+  &__content {
+    @apply flex flex-col items-center gap-5;
+  }
+
+  &__illustration {
+    @apply relative h-32 w-[10.75rem];
+  }
+
+  &__header {
+    @apply flex flex-col items-center gap-2;
+  }
+
+  &__title {
+    @apply text-lg font-semibold text-gray-900;
+  }
+
+  &__description {
+    @apply text-center text-sm font-normal text-gray-600;
+  }
+
+  &__actions {
+    @apply flex flex-row items-start gap-3;
+  }
+}

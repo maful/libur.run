@@ -1,0 +1,17 @@
+<div class="error-page">
+  <div class="error-page__container">
+    <div class="error-page__heading">
+      <div class="error-page__text">
+        <span class="error-page__sub-title">404 error</span>
+        <h1 class="error-page__title">Ooops! Page Not Found</h1>
+      </div>
+      <span class="error-page__support-text">This page doesn't exist or was removed! We suggest you back to home</span>
+    </div>
+    <div class="error-page__actions">
+      <%= link_to "Back to Home", home_path, class: "btn btn--primary btn--large" %>
+    </div>
+  </div>
+  <div class="error-page__illustration">
+    <%= inline_svg_tag "illustrations/404-illustration.svg" %>
+  </div>
+</div>

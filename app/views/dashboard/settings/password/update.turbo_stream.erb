@@ -1,0 +1,6 @@
+<%= turbo_stream.replace(dom_id(@account, "form"), partial: "dashboard/settings/password/form") %>
+<%= turbo_stream
+  .invoke(
+    "document.dispatchEvent",
+    args: ["turbo-notification:show", { detail: { message: "Password was successfully updated." } }],
+  ) %>

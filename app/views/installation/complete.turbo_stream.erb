@@ -1,0 +1,18 @@
+<%= turbo_stream.update "installation_title", "Welcome!" %>
+<%= turbo_stream.update "installation_subtitle", "We are happy to have you on board" %>
+<%= turbo_stream.update "installation_body" do %>
+  <p>Thank you for choosing Libur.run as your HR platform. We are thrilled to have you on board with us as we work to empower your HR processes and make them as efficient and effective as possible.</p>
+  <p>Your support means the world to us, and we are dedicated to ensuring that you have the best possible experience with our software. We believe that the combination of our next-gen open source platform and self-serve approach will provide you with all the tools you need to succeed in your HR processes.</p>
+  <p>Thank you for taking the time to install our app and for giving us the opportunity to be a part of your HR journey. If you have any questions or feedback, please don't hesitate to reach out to us. We are always here to help.</p>
+<% end %>
+<%= turbo_stream.update "installation_actions" do %>
+  <div class="flex justify-end">
+    <%= link_to rodauth.login_path, class: "btn btn--primary", "data-turbo-method": "get" do %>
+      Get me to the app
+      <%= inline_svg_tag "icons/arrow-right.svg", class: "h-5 w-5" %>
+    <% end %>
+  </div>
+<% end %>
+<%= turbo_stream.update "installation_stepper" do %>
+  <%= render(Installation::StepperComponent.new(current_step: @current_step)) %>
+<% end %>

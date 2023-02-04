@@ -1,0 +1,17 @@
+<%= turbo_stream.update "modal_content" do %>
+  <%= render(ModalComponent.new) do |c| %>
+    <% c.with_header(title: "Edit User", icon: "user-plus-01") do |ch| %>
+      <% ch.with_supporting_text { "Update the user details here" } %>
+    <% end %>
+
+    <% c.with_body do %>
+      <%= render partial: "form", locals: { user: @user, form_method: @form_method, form_path: @form_path } %>
+    <% end %>
+
+    <% c.with_footer do %>
+      <%= button_tag "Save", form: dom_id(@user, "form"), class: "btn btn--primary" %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.invoke "document.dispatchEvent", args: ["turbo-modal:show"] %>

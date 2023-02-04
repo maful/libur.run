@@ -1,0 +1,22 @@
+<% breadcrumb :settings_company %>
+
+<%= render partial: "dashboard/settings/shared/page_header" %>
+
+<div class="tabs">
+  <%= render partial: "dashboard/settings/shared/navigation" %>
+  <div class="tabs__body">
+    <div class="tabs__section">
+      <div class="section-header section-header--divider">
+        <h3 class="section-header__title">Company Profile</h3>
+        <span class="section-header__help">Update your company logo and details here.</span>
+      </div>
+      <%= render "form" %>
+    </div>
+    <%= turbo_frame_tag "company_leave_types", src: settings_leave_types_path, loading: "lazy" do %>
+      <p>Fetching leave types ...</p>
+    <% end %>
+    <%= turbo_frame_tag "company_claim_types", src: settings_claim_types_path, loading: "lazy" do %>
+      <p>Fetching claim types ...</p>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="tabs__list" role="tablist">
+  <% if current_account.verified? %>
+    <div class="tabs__item" role="presentation">
+      <%= link_to "My Profile", settings_my_profile_path, class: class_names("tabs__link", { "tabs__link--active": current_page?(controller: "my_profile", action: :show) }) %>
+    </div>
+  <% end %>
+  <div class="tabs__item" role="presentation">
+    <%= link_to "Personal", settings_me_path, class: class_names("tabs__link", { "tabs__link--active": current_page?(controller: "me", action: :show) }) %>
+  </div>
+  <% if current_user.is_admin? %>
+    <div class="tabs__item" role="presentation">
+      <%= link_to "Company", settings_company_path, class: class_names("tabs__link", { "tabs__link--active": current_page?(controller: "company", action: :show) }) %>
+    </div>
+  <% end %>
+  <div class="tabs__item" role="presentation">
+    <%= link_to "Password", settings_password_path, class: class_names("tabs__link", { "tabs__link--active": current_page?(controller: "password", action: :show) }) %>
+  </div>
+  <div class="tabs__item" role="presentation">
+    <%= link_to "Notifications", settings_notifications_path, class: class_names("tabs__link", { "tabs__link--active": current_page?(controller: "notifications", action: :show) }) %>
+  </div>
+</div>
