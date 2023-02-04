@@ -14,6 +14,7 @@
 
 <p align="center">
   <a href="https://github.com/maful/libur.run/actions"><img alt="Build Status" src="https://img.shields.io/github/actions/workflow/status/maful/libur.run/ci.yml?branch=main"></a>
+  <a href="https://github.com/maful/libur.run/releases"><img alt="Release" src="https://img.shields.io/github/v/release/maful/libur.run?include_prereleases&sort=semver"></a>
   <a href="https://github.com/maful/libur.run/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/maful/libur.run"></a>
 </p>
 
