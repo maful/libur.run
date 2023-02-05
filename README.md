@@ -20,7 +20,11 @@
 
 ------
 
-## Prerequisites
+## Installation
+
+To install Libur.run, please follow the instructions provided below. Once you've installed and set up the platform, you'll be able to start managing your HR needs with ease. The following installation is manual, meaning you have responsibilty for the requirements. If you are using Docker, you can follow the installation [with Docker](#with-docker).
+
+### Prerequisites
 
 Before you install and start using Libur.run, please make sure your system meets the following requirements:
 
@@ -28,10 +32,6 @@ Before you install and start using Libur.run, please make sure your system meets
 - Node.js 16 or newer
 - PostgreSQL 14 or newer
 - Redis 6 or newer
-
-## Installation
-
-To install Libur.run, please follow the instructions provided below. Once you've installed and set up the platform, you'll be able to start managing your HR needs with ease.
 
 ### Getting Ready
 1. Give a star to support this project on GitHub :)
@@ -56,6 +56,21 @@ To install Libur.run, please follow the instructions provided below. Once you've
 1. Open your terminal and run `./bin/dev` to start the application.
 1. Wait until all processes are complete.
 1. Open your browser and access `localhost:3000`. You're now ready to start using Libur.run. Welcome!
+
+## With Docker
+
+Installing Libur.run with Docker makes the process easy and smooth. To get started, make sure that Docker is installed on your machine and that [Docker Compose V2](https://www.docker.com/blog/announcing-compose-v2-general-availability/) is enabled. You can find the `Dockerfile` and `compose.yml` files in the root directory of the Libur.run repository.
+
+Here are the steps to install Libur.run with Docker:
+
+1. Give a star to support this project on GitHub :)
+1. Clone or download the repository to your local machine.
+1. Ensure that Docker is running on your machine.
+1. Open a terminal and navigate to the application directory.
+1. Build the image by running `docker compose build`. Wait until the process is complete.
+1. Start the application by running `docker compose up` or `docker compose up -d` to run the containers in the background (detached mode).
+1. To set up the database, open a new terminal window (if you're not using detached mode) and run `docker compose exec web bin/rails db:setup`.
+1. Once the database is set up, the application will be ready to use. Open your browser and access `localhost:3000`. Enjoy using Libur.run!
 
 ### Setting up Account
 
