@@ -52,7 +52,7 @@ jobs:
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:password@localhost:5432/liburrun_test
-          RAILS_MASTER_KEY: ${{ secrets.RAILS_CI_MASTER_KEY }}
+          SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
         run: |
           bin/rails javascript:build
           bin/rails css:build
