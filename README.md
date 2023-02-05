@@ -64,10 +64,9 @@ Installing Libur.run with Docker makes the process easy and smooth. To get start
 Here are the steps to install Libur.run with Docker:
 
 1. Give a star to support this project on GitHub :)
-1. Clone or download the repository to your local machine.
-1. Ensure that Docker is running on your machine.
-1. Open a terminal and navigate to the application directory.
+1. Ensure that Docker is running on your machine, and open a terminal and navigate to the application directory.
 1. Create `.env` file by running `cp .env.example .env` and then set the `DATABASE_HOST` to `db` and `REDIS_URL` to `redis://redis:6379/1` in `.env` file.
+1. Don't forget to set the `RAILS_MASTER_KEY`, as it will be used for encryption.
 1. Build the image by running `docker compose build`. Wait until the process is complete.
 1. Start the application by running `docker compose up` or `docker compose up -d` to run the containers in the background (detached mode).
 1. To set up the database, open a new terminal window (if you're not using detached mode) and run `docker compose exec web bin/rails db:setup`.
