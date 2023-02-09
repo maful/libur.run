@@ -76,6 +76,10 @@
       @apply flex-1;
     }
 
+    &__file-container {
+      @apply flex gap-6;
+    }
+
     &--horizontal {
       @apply flex flex-row gap-8;
     }

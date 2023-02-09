@@ -4,7 +4,7 @@
 }) do |f| %>
   <div class="flex flex-col gap-5">
     <%= f.input :name, label: "Company name", support_text: "Normally is the legal name", input_html: { class: "w-96" } %>
-    <%= f.input :logo, label: "Logo", support_text: "Update your company logo and then choose where you want it to display." %>
+    <%= f.input :logo, label: "Logo", preview_image: @company.logo.attached? ? @company.logo : false, preview_image_class: "w-[12.5rem] max-h-[12.5rem]", support_text: "Update your company logo and then choose where you want it to display." %>
     <%= f.input :phone, label: "Phone", support_text: "Official company phone number." %>
     <%= f.input :email, label: "Email", support_text: "Company email.", input_html: { class: "w-96" } %>
     <%= f.association :finance_approver, collection: @employees,
