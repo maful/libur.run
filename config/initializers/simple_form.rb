@@ -72,11 +72,12 @@ SimpleForm.setup do |config|
       ba.use :label, class: "input-group__label"
       ba.use :support_text, wrap_with: { tag: :span, class: "input-group__help" }
     end
-    b.wrapper tag: :div, class: "input-group__content" do |ba|
+    b.wrapper tag: :div, class: "input-group__content input-group__file-container" do |ba|
+      ba.optional :preview_image
       ba.wrapper tag: :div, class: "input-group" do |ca|
         ca.use :placeholder
         ca.optional :readonly
-        ca.use :input, error_class: "is-invalid"
+        ca.use :input, class: "input-group__file", error_class: "is-invalid"
         ca.use :hint, wrap_with: { class: "input-group__help" }
         ca.use :full_error, wrap_with: { tag: :p, class: "input-group__error-message" }
       end
