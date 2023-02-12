@@ -3,7 +3,7 @@
 class Dashboard::UsersController < DashboardBaseController
   before_action -> { authorize(:users) }
 
-  before_action :set_user, only: [:edit, :update, :resend_invitation]
+  before_action :set_user, only: [:edit, :update, :resend_invitation, :update_status]
   before_action :populate_roles, except: [:index, :show, :resend_invitation]
   before_action :populate_form_create, only: [:new, :create]
   before_action :populate_form_update, only: [:edit, :update]
@@ -82,6 +82,11 @@ class Dashboard::UsersController < DashboardBaseController
         format.turbo_stream
       end
     end
+  end
+
+  def update_status
+    @user.active? ? @user.archived! : @user.active!
+    redirect_to(users_path, notice: "User has been successfully #{@user.active? ? "activated" : "archived"}")
   end
 
   private
