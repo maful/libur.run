@@ -7,6 +7,9 @@
     <%= render(ButtonDropdownComponent.new) do |c| %>
       <% c.with_links([
         { name: "Edit Information", href: edit_user_path(@user) },
+        { name: @user.active? ? "Archived" : "Activated", href: update_status_user_path(@user),
+                                                          hide: @user.inactive?,
+                                                          data: { turbo_method: :patch } },
         { name: "Resend Invitation", href: resend_invitation_user_path(@user),
                                      hide: @account.verified?,
                                      data: { turbo_method: :patch } },

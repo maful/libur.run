@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     resources :users, except: :destroy, param: :public_id do
       member do
         patch "resend_invitation"
+        patch "update_status"
       end
     end
     resources :leaves, except: :destroy, param: :public_id do

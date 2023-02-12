@@ -27,6 +27,6 @@ RSpec.describe(UsersPolicy, type: :policy) do
 
     it { should(permit_actions([:index, :new, :create])) }
     it { should(permit_actions([:edit, :update, :resend_invitation])) }
-    it { should(permit_actions([:show])) }
+    it { should(permit_actions([:show, :update_status])) }
   end
 end

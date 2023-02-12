@@ -28,4 +28,8 @@ class UsersPolicy < ApplicationPolicy
   def resend_invitation?
     user.is_admin?
   end
+
+  def update_status?
+    user.is_admin?
+  end
 end
