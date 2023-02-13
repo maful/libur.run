@@ -78,6 +78,33 @@ Getting started with Libur.run is easy! Simply access the URL, if running locall
 
 TODO: Add Installation Video
 
+## Features
+
+The following features are disabled by default and can be enabled by following these instructions.
+
+### Setting up ActionMailer with SMTP Server
+
+To send emails through the application, you can use an SMTP server. Our framework supports this feature and it can be easily enabled by adding some environment variables. You can add these variables to your system in the `.env` file.
+
+| Variable name        | Default value |
+|----------------------|---------------|
+| SMTP_ADDRESS         |               |
+| SMTP_AUTHENTICATION  | `:plain`      |
+| SMTP_DOMAIN          |               |
+| SMTP_ENABLE_STARTTLS | `true`        |
+| SMTP_PASSWORD        |               |
+| SMTP_PORT            | 587           |
+| SMTP_USERNAME        |               |
+
+Once you have set the environment variables, go to the `config/environments` directory and open the environment file you want to enable SMTP on. For example, if you want to enable SMTP on the production environment, edit the `config/environments/production.rb` file.
+
+- Add the SMTP configuration at the top of the file by including require `Rails.root.join("config/smtp")`.
+- Change the delivery method to `:smtp` by using `config.action_mailer.delivery_method = :smtp`.
+- Set the SMTP server you configured earlier by using `config.action_mailer.smtp_settings = SMTP_SETTINGS`.
+- You may also need to update the default email for the mailer in `app/mailers/application_mailer.rb`.
+
+With these steps, the application will use your SMTP server to send emails. Enjoy!
+
 ## Deployment to Production
 
 Work in progress
