@@ -38,7 +38,7 @@ class Leave < ApplicationRecord
 
   class << self
     def ransackable_attributes(auth_object = nil)
-      super & ["approval_status", "number_of_days", "leave_type_id"]
+      super & ["public_id", "approval_status", "number_of_days", "leave_type_id"]
     end
 
     def ransackable_associations(auth_object = nil)

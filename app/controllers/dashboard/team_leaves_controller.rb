@@ -82,6 +82,7 @@ class Dashboard::TeamLeavesController < DashboardBaseController
     return {} if params[:query].blank?
 
     permitted = params.require(:query).permit(
+      :public_id_eq,
       :employee_account_email_eq,
       :number_of_days_eq,
       :leave_type_id_eq,
@@ -90,6 +91,9 @@ class Dashboard::TeamLeavesController < DashboardBaseController
     )
 
     {}.tap do |h|
+      # public_id
+      h[:public_id] = permitted[:public_id_eq].presence
+
       # email
       h[:email] = permitted[:employee_account_email_eq].presence
 
