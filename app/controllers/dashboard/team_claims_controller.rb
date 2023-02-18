@@ -66,12 +66,16 @@ class Dashboard::TeamClaimsController < DashboardBaseController
     return {} if params[:query].blank?
 
     permitted = params.require(:query).permit(
+      :public_id_eq,
       :name_i_cont,
       by_status: [],
       c: [:p, a: [], v: []],
     )
 
     {}.tap do |h|
+      # public_id
+      h[:public_id] = permitted[:public_id_eq].presence
+
       # name
       h[:name] = permitted[:name_i_cont].presence
 

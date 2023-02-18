@@ -37,7 +37,7 @@ class ClaimGroup < ApplicationRecord
 
   class << self
     def ransackable_attributes(auth_object = nil)
-      super & ["name", "total_amount"]
+      super & ["public_id", "name", "total_amount"]
     end
 
     def ransackable_associations(auth_object = nil)
