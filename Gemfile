@@ -91,6 +91,10 @@ group :test do
   gem "shoulda-matchers", "~> 5.2"
   gem "rails-controller-testing", "~> 1.0"
   gem "pundit-matchers", "~> 1.8"
+  gem "selenium-webdriver", "~> 4.8"
+  gem "capybara", "~> 3.38"
+  gem "webdrivers", "~> 5.2", require: false
+  gem "rack_session_access", "~> 0.2"
 end
 
 group :development do
