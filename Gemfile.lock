@@ -453,6 +453,7 @@ DEPENDENCIES
   rodauth-rails (~> 1.7)
   rspec-rails (~> 6.0)
   rubocop (~> 1.38)
+  rubocop-capybara (~> 2.17)
   rubocop-rails (~> 2.17)
   rubocop-rspec (~> 2.14)
   rubocop-shopify (~> 2.10)

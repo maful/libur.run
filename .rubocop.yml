@@ -4,6 +4,7 @@ inherit_gem:
 require:
   - rubocop-rails
   - rubocop-rspec
+  - rubocop-capybara
 
 AllCops:
   NewCops: enable
