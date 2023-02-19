@@ -23,7 +23,7 @@ RSpec.describe(Leave) do
     it {
       expect(subject).to(validate_inclusion_of(:half_day_time)
         .in_array(["AM", "PM"])
-        .with_message("shoulda-matchers test string is not a valid time"))
+        .with_message("Shoulda::Matchers::ExampleClass is not a valid time"))
     }
   end
 end
