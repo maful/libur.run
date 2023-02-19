@@ -1,22 +1,24 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
-feature "Creating a user" do
-  given!(:company) { create(:company) }
-  given(:account) { create(:account, :verified) }
-  given!(:employee) { create(:employee, with_admin_role: true, account:) }
-  given!(:manager) { create(:employee, with_manager_role: true) }
+describe "Creating a user" do
+  let!(:company) { create(:company) }
+  let(:account) { create(:account, :verified) }
+  let!(:admin) { create(:employee, with_admin_role: true, account:) }
+  let!(:manager) { create(:employee, with_manager_assigned: false, with_manager_role: true) }
 
-  background do
+  before do
     login(account)
   end
 
-  scenario "valid inputs" do
+  it "valid inputs" do
     visit users_path
-    expect(page).to have_content("Users")
+    expect(page).to(have_content("Users"))
 
     click_on("Invite user")
-    expect(page).to have_content("Invite your team member")
-    expect(page).to have_current_path(new_user_path)
+    expect(page).to(have_content("Invite your team member"))
+    expect(page).to(have_current_path(new_user_path))
 
     name = Faker::Name.name
     email = Faker::Internet.unique.email(domain: "example")
@@ -46,21 +48,19 @@ feature "Creating a user" do
       click_button "Invite user", name: "commit"
     end
 
-    expect(page).to have_content("Users")
-    expect(page).to have_content("User was successfully created.")
-    expect(page).to have_current_path(users_path)
-    within "turbo-frame#users-table" do
-      name_elm = find(:xpath, ".//table/tbody/tr[1]/td[1]/a/div/h3")
-      expect(name_elm).to have_content(name)
-      email_elm = find(:xpath, ".//table/tbody/tr[1]/td[1]/a/div/p")
-      expect(email_elm).to have_content(email)
+    expect(page).to(have_content("Users"))
+    expect(page).to(have_content("User was successfully created."))
+    expect(page).to(have_current_path(users_path))
+    within :xpath, ".//table/tbody/tr[1]/td[1]/a/div" do
+      expect(find("h3")).to(have_content(name))
+      expect(find("p")).to(have_content(email))
     end
   end
 
-  scenario "invalid inputs" do
+  it "invalid inputs" do
     visit new_user_path
-    expect(page).to have_content("Invite your team member")
-    expect(page).to have_current_path(new_user_path)
+    expect(page).to(have_content("Invite your team member"))
+    expect(page).to(have_current_path(new_user_path))
 
     name = Faker::Name.name
     email = Faker::Internet.unique.email(domain: "example")
@@ -68,21 +68,21 @@ feature "Creating a user" do
       click_button "Invite user", name: "commit"
     end
 
-    expect(page).to have_current_path(new_user_path)
+    expect(page).to(have_current_path(new_user_path))
     within "form#form_employee" do
-      expect(page).to have_content("Identity number can't be blank")
-      expect(page).to have_content("Name can't be blank")
-      expect(page).to have_content("Email can't be blank")
-      expect(page).to have_content("Birthday can't be blank")
-      expect(page).to have_content("Religion can't be blank")
-      expect(page).to have_content("Marital status can't be blank")
-      expect(page).to have_content("Citizenship can't be blank")
-      expect(page).to have_content("Line 1 can't be blank")
-      expect(page).to have_content("City can't be blank")
-      expect(page).to have_content("State can't be blank")
-      expect(page).to have_content("Country code can't be blank")
-      expect(page).to have_content("Zip can't be blank")
-      expect(page).to have_content("Start date can't be blank")
+      expect(page).to(have_content("Identity number can't be blank"))
+      expect(page).to(have_content("Name can't be blank"))
+      expect(page).to(have_content("Email can't be blank"))
+      expect(page).to(have_content("Birthday can't be blank"))
+      expect(page).to(have_content("Religion can't be blank"))
+      expect(page).to(have_content("Marital status can't be blank"))
+      expect(page).to(have_content("Citizenship can't be blank"))
+      expect(page).to(have_content("Line 1 can't be blank"))
+      expect(page).to(have_content("City can't be blank"))
+      expect(page).to(have_content("State can't be blank"))
+      expect(page).to(have_content("Country code can't be blank"))
+      expect(page).to(have_content("Zip can't be blank"))
+      expect(page).to(have_content("Start date can't be blank"))
     end
   end
 end

@@ -29,6 +29,7 @@ FactoryBot.define do
       with_manager_assigned { true }
       with_manager_role { false }
       with_admin_role { false }
+      with_address { false }
     end
 
     after :create do |employee, evaluator|
@@ -43,6 +44,8 @@ FactoryBot.define do
         employee.roles << Role.find_by(name: Role::ROLE_ADMIN)
         employee.create_onboarding!(state: "completed")
       end
+
+      create(:address, addressable: employee) if evaluator.with_address
 
       employee.reload
     end
