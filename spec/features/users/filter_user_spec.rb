@@ -25,10 +25,10 @@ describe "Filter user" do
 
     email = employee.account.email
     within :xpath, ".//form[@id='employee_search']/div/div[@data-controller='dropdown'][1]" do
-      click_button("Email", name: "button").click
+      click_button("Email", name: "button")
       expect(page).to(have_selector("div[data-dropdown-target='menu']:not(.hidden)", visible: true))
       fill_in "query[account_email_eq]", with: email
-      click_button "Apply", name: "commit"
+      click_button("Apply", name: "commit")
       expect(find("button[name='button'][type='button']")).to(have_content("Email: #{email}"))
     end
 
@@ -44,10 +44,10 @@ describe "Filter user" do
     expect(page).to(have_current_path(users_path))
 
     within :xpath, ".//form[@id='employee_search']/div/div[@data-controller='dropdown'][2]" do
-      click_button("Status", name: "button").click
+      click_button("Status", name: "button")
       expect(page).to(have_selector("div[data-dropdown-target='menu']:not(.hidden)", visible: true))
       check("query_by_status_archived")
-      click_button "Apply", name: "commit"
+      click_button("Apply", name: "commit")
       expect(find("button[name='button'][type='button']")).to(have_content("Status: Archived"))
     end
 
@@ -63,11 +63,11 @@ describe "Filter user" do
     expect(page).to(have_current_path(users_path))
 
     within :xpath, ".//form[@id='employee_search']/div/div[@data-controller='dropdown'][3]" do
-      click_button("Roles", name: "button").click
+      click_button("Roles", name: "button")
       expect(page).to(have_selector("div[data-dropdown-target='menu']:not(.hidden)", visible: true))
       check("query_by_roles_1") # admin
       check("query_by_roles_4") # manager
-      click_button "Apply", name: "commit"
+      click_button("Apply", name: "commit")
       expect(find("button[name='button'][type='button']")).to(have_content("Roles: Manager, Admin"))
     end
 
@@ -83,11 +83,11 @@ describe "Filter user" do
     expect(page).to(have_current_path(users_path))
 
     within :xpath, ".//form[@id='employee_search']/div/div[@data-controller='dropdown'][4]" do
-      click_button("Position", name: "button").click
+      click_button("Position", name: "button")
       expect(page).to(have_selector("div[data-dropdown-target='menu']:not(.hidden)", visible: true))
       select "equals", from: "query[c][][p]"
       fill_in "query[c][][v][]", with: "Senior Software Engineer"
-      click_button "Apply", name: "commit"
+      click_button("Apply", name: "commit")
       expect(find("button[name='button'][type='button']")).to(have_content("Position: Equals Senior Software Engineer"))
     end
 
@@ -105,11 +105,11 @@ describe "Filter user" do
     expect(page).to(have_current_path(users_path))
 
     within :xpath, ".//form[@id='employee_search']/div/div[@data-controller='dropdown'][4]" do
-      click_button("Position", name: "button").click
+      click_button("Position", name: "button")
       expect(page).to(have_selector("div[data-dropdown-target='menu']:not(.hidden)", visible: true))
       select "starts with", from: "query[c][][p]"
       fill_in "query[c][][v][]", with: "Engineering"
-      click_button "Apply", name: "commit"
+      click_button("Apply", name: "commit")
       expect(find("button[name='button'][type='button']")).to(have_content("Position: Starts with Engineering"))
     end
 
@@ -127,11 +127,11 @@ describe "Filter user" do
     expect(page).to(have_current_path(users_path))
 
     within :xpath, ".//form[@id='employee_search']/div/div[@data-controller='dropdown'][4]" do
-      click_button("Position", name: "button").click
+      click_button("Position", name: "button")
       expect(page).to(have_selector("div[data-dropdown-target='menu']:not(.hidden)", visible: true))
       select "ends with", from: "query[c][][p]"
       fill_in "query[c][][v][]", with: "Engineer"
-      click_button "Apply", name: "commit"
+      click_button("Apply", name: "commit")
       expect(find("button[name='button'][type='button']")).to(have_content("Position: Ends with Engineer"))
     end
 
@@ -150,10 +150,10 @@ describe "Filter user" do
 
     email = employee.account.email
     within :xpath, ".//form[@id='employee_search']/div/div[@data-controller='dropdown'][1]" do
-      click_button("Email", name: "button").click
+      click_button("Email", name: "button")
       expect(page).to(have_selector("div[data-dropdown-target='menu']:not(.hidden)", visible: true))
       fill_in "query[account_email_eq]", with: email
-      click_button "Apply", name: "commit"
+      click_button("Apply", name: "commit")
       expect(find("button[name='button'][type='button']")).to(have_content("Email: #{email}"))
     end
 
@@ -161,7 +161,7 @@ describe "Filter user" do
 
     within :xpath, ".//turbo-frame[@id='users-table']/div/div/form" do
       expect(page).to(have_button("Clear Filters"))
-      click_button "Clear Filters"
+      click_button("Clear Filters")
       expect(page).not_to(have_button("Clear Filters"))
     end
 
