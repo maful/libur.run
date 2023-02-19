@@ -53,7 +53,15 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: Cache Chrome Driver
+        id: cache-chrome-driver
+        uses: actions/cache@v3
+        with:
+          path: /usr/local/bin/chromedriver
+          key: ${{ runner.os }}-build-chrome-driver
+
       - name: Install Chrome Driver
+        if: steps.cache-chrome-driver.outputs.cache-hit != 'true'
         uses: nanasess/setup-chromedriver@v1
         with:
           chromedriver-version: "110.0.5481.77"
