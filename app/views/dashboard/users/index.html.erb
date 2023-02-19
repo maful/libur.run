@@ -36,8 +36,8 @@
               <span class="text-sm font-medium">Filter by Status</span>
               <%= f.collection_check_boxes :by_status,
                                            Employee.filter_statuses.keys,
-                                           Proc.new { |c| c },
-                                           Proc.new { |c| c.humanize },
+                                           proc { |c| c },
+                                           proc { |c| c.humanize },
                                            include_hidden: false do |b| %>
                 <div class="flex gap-2 items-center">
                   <%= b.check_box(class: "h-4 w-4 rounded border border-gray-300 bg-white") %>
@@ -52,8 +52,8 @@
             <div class="flex flex-col gap-3 p-3">
               <span class="text-sm font-medium">Filter by Roles</span>
               <%= f.collection_check_boxes :by_roles, @roles,
-                                           Proc.new { |c| c.id.to_s },
-                                           Proc.new { |c| c.name.humanize },
+                                           proc { |c| c.id.to_s },
+                                           proc { |c| c.name.humanize },
                                            include_hidden: false do |b| %>
                 <div class="flex gap-2 items-center">
                   <%= b.check_box(class: "h-4 w-4 rounded border border-gray-300 bg-white") %>
