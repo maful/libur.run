@@ -18,6 +18,13 @@ describe "Filter user" do
     login(account)
   end
 
+  it "total filters", :selenium_chrome do
+    visit users_path
+    expect(page).to(have_content("Users"))
+    expect(page).to(have_current_path(users_path))
+    expect(find(:xpath, ".//form[@id='employee_search']/div")).to(have_selector("div[data-controller='dropdown']", count: 4))
+  end
+
   it "filter by email" do
     visit users_path
     expect(page).to(have_content("Users"))
