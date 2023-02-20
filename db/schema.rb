@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_20_071019) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_20_071520) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -270,7 +270,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_20_071019) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "claim_groups", "employees", column: "approver_id"
-  add_foreign_key "companies", "employees", column: "finance_approver_id", on_delete: :nullify
   add_foreign_key "employees", "accounts"
   add_foreign_key "employees", "employees", column: "manager_id"
   add_foreign_key "leaves", "employees", column: "manager_id"
