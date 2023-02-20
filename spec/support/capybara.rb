@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 headless_js_driver = :selenium_chrome_headless
 js_driver = :selenium_chrome
 
@@ -5,7 +7,7 @@ Webdrivers::Chromedriver.required_version = "110.0.5481.77"
 
 # if CUSTOM_BROWSER is defined, should be in local development
 if ENV["CUSTOM_BROWSER"].present?
-  Capybara.register_driver :selenium_chrome_headless_custom_browser do |app|
+  Capybara.register_driver(:selenium_chrome_headless_custom_browser) do |app|
     Capybara::Selenium::Driver.load_selenium
     browser_options = Selenium::WebDriver::Chrome::Options.new
     browser_options.binary = ENV["CUSTOM_BROWSER"]
@@ -18,7 +20,7 @@ if ENV["CUSTOM_BROWSER"].present?
     Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
   end
 
-  Capybara.register_driver :selenium_chrome_custom_browser do |app|
+  Capybara.register_driver(:selenium_chrome_custom_browser) do |app|
     Capybara::Selenium::Driver.load_selenium
     browser_options = Selenium::WebDriver::Chrome::Options.new
     browser_options.binary = ENV["CUSTOM_BROWSER"]
@@ -42,12 +44,11 @@ Capybara.javascript_driver = headless_js_driver
 Capybara.default_max_wait_time = 2
 
 RSpec.configure do |config|
-  config.before(:each) do |example|
+  config.before do |example|
     Capybara.current_driver = js_driver if example.metadata[:selenium_chrome]
   end
 
-  config.after(:each) do
+  config.after do
     Capybara.use_default_driver
   end
 end
-

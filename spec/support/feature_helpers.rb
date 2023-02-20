@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module FeatureHelpers
   def login(account)
     page.set_rack_session(account_id: account.id)
