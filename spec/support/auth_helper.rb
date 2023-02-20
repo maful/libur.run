@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 module AuthHelper
-  def login(account, onboarding_completed: true)
+  def login(account)
     session[:account_id] = account.id
     session[:authenticated_by] = ["password"]
-    session[:onboarding_status] = onboarding_completed
   end
 
   def logout

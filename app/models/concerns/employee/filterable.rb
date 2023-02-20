@@ -46,7 +46,7 @@ module Employee::Filterable
       query
     }
     scope :by_roles, ->(*role_ids) {
-      where(id: Assignment.select(:profile_id).where(role_id: role_ids)) if role_ids.present?
+      where(id: Assignment.select(:employee_id).where(role_id: role_ids)) if role_ids.present?
     }
   end
 end

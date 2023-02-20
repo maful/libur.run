@@ -84,6 +84,10 @@ class Employee < ApplicationRecord
     def ransackable_scopes(auth_object = nil)
       [:by_status, :by_roles]
     end
+
+    def ransackable_scopes_skip_sanitize_args
+      [:by_roles]
+    end
   end
 
   private

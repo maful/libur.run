@@ -48,7 +48,3 @@ end
 #  index_companies_on_finance_approver_id  (finance_approver_id)
 #  index_companies_on_public_id            (public_id) UNIQUE
 #
-# Foreign Keys
-#
-#  fk_rails_...  (finance_approver_id => employees.id) ON DELETE => nullify
-#

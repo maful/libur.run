@@ -4,6 +4,7 @@ inherit_gem:
 require:
   - rubocop-rails
   - rubocop-rspec
+  - rubocop-capybara
 
 AllCops:
   NewCops: enable
@@ -13,10 +14,22 @@ AllCops:
     - 'bin/**/*'
 
 RSpec/MultipleExpectations:
-  Max: 3
+  Max: 5
+  Exclude:
+    - 'spec/features/**/*'
 
 RSpec/ImplicitExpect:
   EnforcedStyle: should
 
 RSpec/NamedSubject:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Exclude:
+    - 'spec/features/**/*'
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
+
+Capybara/VisibilityMatcher:
   Enabled: false

@@ -14,14 +14,15 @@ FactoryBot.define do
       ["I will be going on vacation", "I need to take some time off for a medical procedure.",
        "I am requesting a leave of absence to take care of a personal matter.",].sample
     end
-    start_date { (Date.current - 2.days) }
-    end_date { Date.current }
-    number_of_days { 2 }
+    start_date { Date.new(2023, 2, 23) }
+    end_date { start_date + 1.day }
     year { Date.current.year }
 
     trait :half_day do
       half_day { true }
       half_day_time { ["AM", "PM"].sample }
+      start_date { Date.new(2023, 2, 27) }
+      end_date { start_date }
     end
 
     trait :approved do
