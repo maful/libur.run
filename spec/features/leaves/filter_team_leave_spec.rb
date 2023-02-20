@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "Filter team leave" do
+describe "Filter team leave requests" do
   let!(:lt_annual_leave) { create(:leave_type, name: "Annual Leave") }
   let!(:lt_sick_leave) { create(:leave_type, name: "Sick Leave", days_per_year: 10) }
   let(:employee1) { create(:employee) }
@@ -28,7 +28,7 @@ describe "Filter team leave" do
     )).to(have_selector("div[data-controller='dropdown']", count: 5))
   end
 
-  it "filter by id", :selenium_chrome do
+  it "filter by id" do
     visit team_leaves_path
 
     within :xpath, ".//form[@id='leave_search']/div/div[@data-controller='dropdown'][1]" do
@@ -45,7 +45,7 @@ describe "Filter team leave" do
     expect(find("turbo-frame#team-leaves-list")).to(have_selector("table tbody tr", count: 1))
   end
 
-  it "filter by email", :selenium_chrome do
+  it "filter by email" do
     visit team_leaves_path
 
     email = employee1.account.email
@@ -63,7 +63,7 @@ describe "Filter team leave" do
     expect(find("turbo-frame#team-leaves-list")).to(have_selector("table tbody tr", count: 1))
   end
 
-  it "filter by leave type", :selenium_chrome do
+  it "filter by leave type" do
     visit team_leaves_path
 
     within :xpath, ".//form[@id='leave_search']/div/div[@data-controller='dropdown'][3]" do
@@ -80,7 +80,7 @@ describe "Filter team leave" do
     expect(find("turbo-frame#team-leaves-list")).to(have_selector("table tbody tr", count: 1))
   end
 
-  it "filter by status", :selenium_chrome do
+  it "filter by status" do
     visit team_leaves_path
 
     within :xpath, ".//form[@id='leave_search']/div/div[@data-controller='dropdown'][4]" do
@@ -98,7 +98,7 @@ describe "Filter team leave" do
     expect(find("turbo-frame#team-leaves-list")).to(have_selector("table tbody tr", count: 2))
   end
 
-  it "filter by total days - equals", :selenium_chrome do
+  it "filter by total days - equals" do
     visit team_leaves_path
 
     within :xpath, ".//form[@id='leave_search']/div/div[@data-controller='dropdown'][5]" do
@@ -118,7 +118,7 @@ describe "Filter team leave" do
     expect(find("turbo-frame#team-leaves-list")).to(have_selector("table tbody tr", count: 1))
   end
 
-  it "filter by total days - less than", :selenium_chrome do
+  it "filter by total days - less than" do
     visit team_leaves_path
 
     within :xpath, ".//form[@id='leave_search']/div/div[@data-controller='dropdown'][5]" do
@@ -138,7 +138,7 @@ describe "Filter team leave" do
     expect(find("turbo-frame#team-leaves-list")).to(have_selector("table tbody tr", count: 1))
   end
 
-  it "filter by total days - greater than", :selenium_chrome do
+  it "filter by total days - greater than" do
     visit team_leaves_path
 
     within :xpath, ".//form[@id='leave_search']/div/div[@data-controller='dropdown'][5]" do
@@ -158,7 +158,7 @@ describe "Filter team leave" do
     expect(find("turbo-frame#team-leaves-list")).to(have_selector("table tbody tr", count: 1))
   end
 
-  it "clear filters", :selenium_chrome do
+  it "clear filters" do
     visit team_leaves_path
 
     within :xpath, ".//form[@id='leave_search']/div/div[@data-controller='dropdown'][1]" do
