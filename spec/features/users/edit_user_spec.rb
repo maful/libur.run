@@ -3,14 +3,11 @@
 require "rails_helper"
 
 describe "Updating a user" do
-  let!(:company) { create(:company) }
-  let(:account) { create(:account, :verified) }
-  let!(:admin) { create(:employee, with_manager_assigned: false, with_admin_role: true, account:) }
-  let!(:manager) { create(:employee, with_manager_assigned: false, with_manager_role: true) }
-  let!(:employee) { create(:employee, with_manager_assigned: false, with_address: true) }
+  let(:employee) { create(:employee, with_manager_assigned: false, with_address: true) }
 
   before do
-    login(account)
+    login(DataVariables.admin.account)
+    employee
   end
 
   it "valid inputs" do

@@ -3,13 +3,11 @@
 require "rails_helper"
 
 describe "Creating a user" do
-  let!(:company) { create(:company) }
-  let(:account) { create(:account, :verified) }
-  let!(:admin) { create(:employee, with_admin_role: true, account:) }
-  let!(:manager) { create(:employee, with_manager_assigned: false, with_manager_role: true) }
+  let(:manager) { create(:employee, with_manager_assigned: false, with_manager_role: true) }
 
   before do
-    login(account)
+    login(DataVariables.admin.account)
+    manager
   end
 
   it "valid inputs" do

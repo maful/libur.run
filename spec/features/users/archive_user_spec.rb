@@ -3,17 +3,15 @@
 require "rails_helper"
 
 describe "Archive user" do
-  let!(:company) { create(:company) }
-  let(:account) { create(:account, :verified) }
-  let!(:admin) { create(:employee, with_admin_role: true, account:) }
+  let(:employee) { create(:employee, with_manager_assigned: false) }
+  let(:employee_archived) { create(:employee, :archived, with_manager_assigned: false) }
 
   before do
-    login(account)
+    login(DataVariables.admin.account)
   end
 
   it "when user is active" do
-    employee = create(:employee, with_manager_assigned: false)
-
+    employee
     visit users_path
     expect(page).to(have_content("Users"))
     find(:xpath, ".//table/tbody/tr[1]/td[1]/a").click
@@ -35,20 +33,19 @@ describe "Archive user" do
   end
 
   it "when user is already archived" do
-    arhived_employee = create(:employee, :archived, with_manager_assigned: false)
-
+    employee_archived
     visit users_path
     expect(page).to(have_content("Users"))
     find(:xpath, ".//table/tbody/tr[1]/td[1]/a").click
 
-    expect(page).to(have_current_path(user_path(arhived_employee)))
+    expect(page).to(have_current_path(user_path(employee_archived)))
     within :xpath, ".//main/div/div[1]/div/div[2]/div" do
       click_button "Action"
       expect(page).to(have_selector('div[data-dropdown-target="menu"].button-dropdown__menu.button-dropdown__menu--right-direction'))
       expect(page).not_to(have_selector("a", text: "Archive"))
     end
 
-    expect(page).to(have_current_path(user_path(arhived_employee)))
-    expect(arhived_employee.reload.archived?).to(be_truthy)
+    expect(page).to(have_current_path(user_path(employee_archived)))
+    expect(employee_archived.reload.archived?).to(be_truthy)
   end
 end

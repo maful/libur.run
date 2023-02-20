@@ -3,26 +3,29 @@
 require "rails_helper"
 
 describe "Filter user" do
-  let!(:company) { create(:company) }
-  let(:account) { create(:account, :verified) }
-  let!(:admin) { create(:employee, position: "CEO", with_admin_role: true, with_manager_assigned: false, account:) }
-  let!(:manager) do
+  let(:manager) do
     create(:employee, position: "Engineering Manager", with_manager_role: true, with_manager_assigned: false)
   end
-  let!(:employee) { create(:employee, position: "Senior Software Engineer", with_manager_assigned: false) }
-  let!(:employee_archived) do
+  let(:employee) { create(:employee, position: "Senior Software Engineer", with_manager_assigned: false) }
+  let(:employee_archived) do
     create(:employee, :archived, position: "Junior Software Engineer", with_manager_assigned: false)
   end
 
   before do
-    login(account)
+    login(DataVariables.admin.account)
+    manager
+    employee
+    employee_archived
   end
 
-  it "total filters", :selenium_chrome do
+  it "total filters" do
     visit users_path
     expect(page).to(have_content("Users"))
     expect(page).to(have_current_path(users_path))
-    expect(find(:xpath, ".//form[@id='employee_search']/div")).to(have_selector("div[data-controller='dropdown']", count: 4))
+    expect(find(
+      :xpath,
+      ".//form[@id='employee_search']/div",
+    )).to(have_selector("div[data-controller='dropdown']", count: 4))
   end
 
   it "filter by email" do
