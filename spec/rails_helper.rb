@@ -76,5 +76,14 @@ RSpec.configure do |config|
   config.before(:suite) do
     # Load seed
     Rails.application.load_seed
+    DataVariables.company = FactoryBot.create(:company)
+  end
+
+  config.before(:each, type: :feature) do
+    DataVariables.admin = FactoryBot.create(:employee, with_admin_role: true, with_manager_assigned: false)
+  end
+
+  config.after(:suite) do
+    DataVariables.reset
   end
 end
