@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe(TeamClaimsPolicy, type: :policy) do
   subject { described_class.new(user, object) }
 
-  let!(:company) { create(:company) }
+  let(:company) { DataVariables.company }
   let(:object) { nil }
 
   context "when being a user" do
