@@ -96,6 +96,7 @@ group :test do
   gem "capybara", "~> 3.38"
   gem "webdrivers", "~> 5.2", require: false
   gem "rack_session_access", "~> 0.2"
+  gem "database_cleaner-active_record", "~> 2.1"
 end
 
 group :development do
