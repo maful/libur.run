@@ -19,6 +19,10 @@ describe "Filter claims" do
     cg
   end
 
+  around do |example|
+    travel_to(Time.zone.local(2023, 2)) { example.run }
+  end
+
   before do
     login(employee.account)
     claim_group1
