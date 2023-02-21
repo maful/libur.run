@@ -26,7 +26,7 @@ FactoryBot.define do
     end
 
     transient do
-      with_manager_assigned { true }
+      with_manager_assigned { false }
       with_manager_role { false }
       with_admin_role { false }
       with_address { false }
@@ -48,6 +48,11 @@ FactoryBot.define do
       create(:address, addressable: employee) if evaluator.with_address
 
       employee.reload
+    end
+
+    factory :manager, parent: :employee do
+      with_manager_assigned { false }
+      with_manager_role { true }
     end
   end
 end

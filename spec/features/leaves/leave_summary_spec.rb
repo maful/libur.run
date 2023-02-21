@@ -6,8 +6,8 @@ describe "Leave summary" do
   let(:lt_annual_leave) { create(:leave_type, name: "Annual Leave") }
   let(:lt_sick_leave) { create(:leave_type, name: "Sick Leave") }
   let(:lt_family_leave) { create(:leave_type, name: "Family Leave") }
-  let(:employee) { create(:employee) }
-  let(:manager) { employee.manager }
+  let(:manager) { create(:manager) }
+  let(:employee) { create(:employee, manager:) }
   let(:leave1) { create(:leave, leave_type: lt_sick_leave, manager:, employee:) }
   let(:leave2) { create(:leave, :half_day, leave_type: lt_annual_leave, manager:, employee:) }
 

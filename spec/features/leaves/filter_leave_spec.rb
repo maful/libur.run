@@ -5,10 +5,11 @@ require "rails_helper"
 describe "Filter leave requests" do
   let(:lt_annual_leave) { create(:leave_type, name: "Annual Leave") }
   let(:lt_sick_leave) { create(:leave_type, name: "Sick Leave") }
-  let(:employee) { create(:employee) }
-  let(:leave1) { create(:leave, leave_type: lt_sick_leave, manager: employee.manager, employee:) }
+  let(:manager) { create(:manager) }
+  let(:employee) { create(:employee, manager:) }
+  let(:leave1) { create(:leave, leave_type: lt_sick_leave, manager:, employee:) }
   let(:leave2) do
-    create(:leave, :half_day, :approved, leave_type: lt_annual_leave, manager: employee.manager, employee:)
+    create(:leave, :half_day, :approved, leave_type: lt_annual_leave, manager:, employee:)
   end
 
   around do |example|

@@ -5,7 +5,8 @@ require "rails_helper"
 describe "Apply leave" do
   let(:leave_type) { create(:leave_type, name: "Annual Leave") }
   let(:leave_type2) { create(:leave_type, name: "Sick Leave", days_per_year: 1) }
-  let(:employee) { create(:employee) }
+  let(:manager) { create(:manager) }
+  let(:employee) { create(:employee, manager:) }
 
   around do |example|
     travel_to(Time.zone.local(2023, 2)) { example.run }
