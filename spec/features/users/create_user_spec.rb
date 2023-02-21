@@ -60,8 +60,6 @@ describe "Creating a user" do
     expect(page).to(have_content("Invite your team member"))
     expect(page).to(have_current_path(new_user_path))
 
-    name = Faker::Name.name
-    email = Faker::Internet.unique.email(domain: "example")
     within "form#form_employee" do
       click_button "Invite user", name: "commit"
     end

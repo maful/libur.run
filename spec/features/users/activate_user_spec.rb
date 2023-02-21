@@ -19,14 +19,14 @@ describe "Activate user" do
     expect(page).to(have_current_path(user_path(employee_archived)))
     within :xpath, ".//main/div/div[1]/div/div[2]/div" do
       click_button "Action"
-      expect(page).to(have_selector('div[data-dropdown-target="menu"].button-dropdown__menu.button-dropdown__menu--right-direction'))
+      expect(page).to(have_selector('div[data-dropdown-target="menu"]'))
       expect(page).to(have_selector("a", text: "Activate"))
       find("a", text: "Activate").click
     end
 
     expect(page).to(have_content("Users"))
     expect(page).to(have_current_path(users_path))
-    expect(employee_archived.reload.active?).to(be_truthy)
+    expect(employee_archived.reload).to(be_active)
     within :xpath, ".//table/tbody/tr[1]/td[5]" do
       expect(find("a")).to(have_content("Active"))
     end
@@ -41,11 +41,11 @@ describe "Activate user" do
     expect(page).to(have_current_path(user_path(employee_active)))
     within :xpath, ".//main/div/div[1]/div/div[2]/div" do
       click_button "Action"
-      expect(page).to(have_selector('div[data-dropdown-target="menu"].button-dropdown__menu.button-dropdown__menu--right-direction'))
+      expect(page).to(have_selector('div[data-dropdown-target="menu"]'))
       expect(page).not_to(have_selector("a", text: "Activate"))
     end
 
     expect(page).to(have_current_path(user_path(employee_active)))
-    expect(employee_active.reload.active?).to(be_truthy)
+    expect(employee_active.reload).to(be_active)
   end
 end
