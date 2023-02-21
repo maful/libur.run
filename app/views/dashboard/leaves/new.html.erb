@@ -21,5 +21,5 @@
 
   <% c.with_footer do %>
     <%= button_tag "Submit", form: dom_id(@leave, "form"), class: "btn btn--primary" if current_user.manager.present? %>
-  <% end %>
+  <% end if current_user.manager.present? %>
 <% end %>
