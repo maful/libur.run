@@ -21,7 +21,7 @@ FactoryBot.define do
     after :create do |account, evaluator|
       if evaluator.with_employee
         # create employee
-        employee = create(:employee, account:)
+        create(:employee, account:)
         account.reload
       end
     end
