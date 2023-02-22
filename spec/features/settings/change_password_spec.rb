@@ -71,11 +71,10 @@ describe "Change password" do
   it "new password is too short" do
     visit settings_password_path
 
-    new_password = Faker::Internet.password(min_length: 3)
     within("form.simple_form") do
       fill_in("account[current_password]", with: password)
-      fill_in("account[new_password]", with: new_password)
-      fill_in("account[new_password_confirmation]", with: new_password)
+      fill_in("account[new_password]", with: "short")
+      fill_in("account[new_password_confirmation]", with: "short")
       click_button("Update password")
       expect(page).to(have_selector("p.input-group__error-message", text: "New password is too short"))
     end
