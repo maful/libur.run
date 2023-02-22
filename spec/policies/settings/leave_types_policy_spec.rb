@@ -17,7 +17,7 @@ RSpec.describe(Settings::LeaveTypesPolicy, type: :policy) do
 
   context "when being an admin" do
     let(:account) { create(:account) }
-    let(:user) { create(:employee, with_admin_role: true, account:) }
+    let(:user) { create(:admin, account:) }
 
     it { should(permit_actions([:index, :new, :create])) }
     it { should(permit_actions([:edit, :update])) }

@@ -18,7 +18,7 @@ RSpec.describe(OnboardingPolicy) do
 
   context "when being an admin" do
     let(:account) { create(:account) }
-    let(:user) { create(:employee, with_admin_role: true, account:) }
+    let(:user) { create(:admin, account:) }
 
     it { should(permit_actions([:index, :personal_info, :company_info])) }
     it { should(permit_actions([:confirmation, :verified])) }

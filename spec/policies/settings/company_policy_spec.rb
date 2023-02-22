@@ -16,7 +16,7 @@ RSpec.describe(Settings::CompanyPolicy, type: :policy) do
 
   context "when being an admin" do
     let(:account) { create(:account) }
-    let(:user) { create(:employee, with_admin_role: true, account:) }
+    let(:user) { create(:admin, account:) }
 
     it { should(permit_actions([:show, :update])) }
   end

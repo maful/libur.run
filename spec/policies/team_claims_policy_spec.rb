@@ -30,7 +30,7 @@ RSpec.describe(TeamClaimsPolicy, type: :policy) do
 
   context "when being an admin company" do
     let(:account) { create(:account) }
-    let(:user) { create(:employee, with_admin_role: true, account:) }
+    let(:user) { create(:admin, account:) }
 
     it { should(permit_actions([:index, :show])) }
     it { should(forbid_actions([:edit, :update])) }
