@@ -9,16 +9,14 @@ RSpec.describe(TeamClaimsPolicy, type: :policy) do
   let(:object) { nil }
 
   context "when being a user" do
-    let(:account) { create(:account) }
-    let(:user) { create(:employee, with_manager_role: true, account:) }
+    let(:user) { create(:employee) }
 
     it { should(forbid_actions([:index, :show])) }
     it { should(forbid_actions([:edit, :update])) }
   end
 
   context "when being a finance approver" do
-    let(:account) { create(:account) }
-    let(:user) { create(:employee, account:) }
+    let(:user) { create(:employee) }
 
     before do
       company.update(finance_approver: user)
@@ -29,8 +27,7 @@ RSpec.describe(TeamClaimsPolicy, type: :policy) do
   end
 
   context "when being an admin company" do
-    let(:account) { create(:account) }
-    let(:user) { create(:admin, account:) }
+    let(:user) { create(:admin) }
 
     it { should(permit_actions([:index, :show])) }
     it { should(forbid_actions([:edit, :update])) }

@@ -8,8 +8,7 @@ RSpec.describe(Settings::MePolicy, type: :policy) do
   let(:object) { nil }
 
   context "when being a user" do
-    let(:account) { create(:account, with_employee: true) }
-    let(:user) { account.employee }
+    let(:user) { create(:employee) }
 
     it { should(permit_actions([:show, :update])) }
   end

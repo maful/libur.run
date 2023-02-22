@@ -8,16 +8,14 @@ RSpec.describe(Settings::LeaveTypesPolicy, type: :policy) do
   let(:object) { nil }
 
   context "when being a user" do
-    let(:account) { create(:account, with_employee: true) }
-    let(:user) { account.employee }
+    let(:user) { create(:employee) }
 
     it { should(forbid_actions([:index, :new, :create])) }
     it { should(forbid_actions([:edit, :update])) }
   end
 
   context "when being an admin" do
-    let(:account) { create(:account) }
-    let(:user) { create(:admin, account:) }
+    let(:user) { create(:admin) }
 
     it { should(permit_actions([:index, :new, :create])) }
     it { should(permit_actions([:edit, :update])) }

@@ -8,22 +8,19 @@ RSpec.describe(UsersPolicy, type: :policy) do
   let(:object) { nil }
 
   context "when being a visitor" do
-    let(:account) { build(:account) }
-    let(:user) { build(:employee, account:) }
+    let(:user) { build(:employee) }
 
     it { should(forbid_action(:index)) }
   end
 
   context "when being a user" do
-    let(:account) { create(:account, with_employee: true) }
-    let(:user) { account.employee }
+    let(:user) { create(:employee) }
 
     it { should(forbid_action(:index)) }
   end
 
   context "when being an admin" do
-    let(:account) { create(:account) }
-    let(:user) { create(:admin, account:) }
+    let(:user) { create(:admin) }
 
     it { should(permit_actions([:index, :new, :create])) }
     it { should(permit_actions([:edit, :update, :resend_invitation])) }
