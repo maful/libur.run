@@ -9,7 +9,7 @@
                                  input_html: { class: "w-full" },
                                  prompt: "Choose Claim type",
                                  wrapper: :vertical_select %>
-  <%= f.input :amount, input_html: { class: "w-full" } %>
+  <%= f.input :amount, input_html: { class: "w-full", value: nil } %>
   <%= f.input :issue_date, as: :string,
                            wrapper_html: { "data-controller": "datepicker" },
                            input_html: { "data-datepicker-target": "input", class: "w-full" } %>
