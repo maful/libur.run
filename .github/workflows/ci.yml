@@ -53,6 +53,9 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: Install libvips
+        run: sudo apt install -y libvips
+
       - name: Cache Chrome Driver
         id: cache-chrome-driver
         uses: actions/cache@v3
