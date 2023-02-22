@@ -12,9 +12,11 @@ class Company < ApplicationRecord
   accepts_nested_attributes_for :address, update_only: true
 
   validates :name, presence: true
-  validates :email, presence: true,
+  validates :email,
+    presence: true,
     format: { with: URI::MailTo::EMAIL_REGEXP },
     uniqueness: { case_sensitive: false }
+  validates :logo, content_type: ["image/png", "image/jpeg"], size: { less_than_or_equal_to: 1.megabytes }
 end
 
 # == Schema Information

@@ -54,6 +54,10 @@ FactoryBot.define do
       with_manager_assigned { false }
       with_manager_role { true }
     end
+
+    factory :admin, parent: :employee do
+      with_admin_role { true }
+    end
   end
 end
 
