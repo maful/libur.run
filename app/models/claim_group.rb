@@ -22,6 +22,7 @@ class ClaimGroup < ApplicationRecord
 
   validates :name, presence: true
   validates :name, length: { maximum: 50, too_long: "%{count} characters is the maximum allowed" }
+  validates :comment, length: { maximum: 100, too_long: "%{count} characters is the maximum allowed" }
   validates :submission_date, presence: true
 
   before_create :set_total_amount, if: proc { claims.present? }

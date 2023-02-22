@@ -2,7 +2,6 @@
 
 FactoryBot.define do
   factory :claim_group do
-    association :approver, factory: :employee
     association :employee
     sequence(:name) { |n| "Group #{n}" }
     approval_date { nil }

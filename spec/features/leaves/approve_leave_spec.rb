@@ -4,8 +4,8 @@ require "rails_helper"
 
 describe "Approve leave request" do
   let!(:leave_type) { create(:leave_type, name: "Annual Leave") }
-  let(:employee) { create(:employee) }
-  let(:manager) { employee.manager }
+  let(:manager) { create(:manager) }
+  let(:employee) { create(:employee, manager:) }
   let(:leave) { create(:leave, leave_type:, manager:, employee:) }
   let(:leave_approved) { create(:leave, :approved, leave_type:, manager:, employee:) }
 
