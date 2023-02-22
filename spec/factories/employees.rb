@@ -34,7 +34,7 @@ FactoryBot.define do
 
     after :create do |employee, evaluator|
       if evaluator.with_manager_assigned
-        employee.manager = create(:employee, with_manager_assigned: false, with_manager_role: true)
+        employee.manager = create(:manager)
         employee.save
       end
 

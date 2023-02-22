@@ -3,9 +3,11 @@
 module DataVariables
   mattr_accessor :company, :admin
 
-  def self.reset
-    self.company = nil
-    self.admin = nil
+  class << self
+    def reset
+      self.company = nil
+      self.admin = nil
+    end
   end
 end
 
