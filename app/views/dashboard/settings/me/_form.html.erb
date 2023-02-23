@@ -13,7 +13,12 @@
         <%= f.simple_fields_for :account, include_id: false do |fe| %>
           <%= fe.input :email, support_text: "A company email", placeholder: "user@company.com", input_html: { class: "w-96" } %>
         <% end %>
-        <%= f.input :avatar, label: "Avatar", preview_image: @user.avatar.attached? ? @user.avatar.variant(:thumb) : false, preview_image_class: "w-20 h-20 rounded-full", support_text: "Update your avatar and this is what you will see in the top navigation" %>
+        <% if @user.avatar.attached? && @user.avatar.attachment.blob.present? && @user.avatar.attachment.blob.persisted?
+            preview_image = @user.avatar.variant(:thumb)
+          else
+            preview_image = false
+        end %>
+        <%= f.input :avatar, label: "Avatar", preview_image:, preview_image_class: "w-20 h-20 rounded-full", support_text: "Update your avatar and this is what you will see in the top navigation" %>
         <div class="input-group input-group--horizontal">
           <div class="input-group__text-container">
             <label class="input-group__label" for="user_manager_id"><%= f.label :about, "About me" %></label>

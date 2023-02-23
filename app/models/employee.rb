@@ -32,7 +32,8 @@ class Employee < ApplicationRecord
 
   accepts_nested_attributes_for :address, update_only: true
   accepts_nested_attributes_for :account, update_only: true
-  accepts_nested_attributes_for :assignments, allow_destroy: true,
+  accepts_nested_attributes_for :assignments,
+    allow_destroy: true,
     reject_if: proc { |attributes| attributes["role_id"] == "0" }
   # TODO: Save the roles to redis and update every change
 
@@ -43,6 +44,7 @@ class Employee < ApplicationRecord
   validates :marital_status, presence: true, on: :employee_setup
   validates :citizenship, presence: true, on: :employee_setup
   validates :start_date, presence: true, on: :employee_setup
+  validates :avatar, content_type: ["image/png", "image/jpeg"], size: { less_than_or_equal_to: 1.megabytes }
 
   after_create :initiate_leave_balances
   after_create_commit :assign_default_role
@@ -94,7 +96,7 @@ class Employee < ApplicationRecord
 
   def initiate_leave_balances
     balances = []
-    LeaveType.where(status: true, year: Date.current.year).each do |type|
+    LeaveType.where(status: true, year: Date.current.year).find_each do |type|
       balances.push({ leave_type: type, entitled_balance: type.days_per_year, remaining_balance: type.days_per_year })
     end
     leave_balances.create(balances)

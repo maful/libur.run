@@ -81,7 +81,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each, type: :feature) do
-    DataVariables.admin = FactoryBot.create(:employee, with_admin_role: true, with_manager_assigned: false)
+    DataVariables.admin = FactoryBot.create(:admin)
   end
 
   config.after(:suite) do

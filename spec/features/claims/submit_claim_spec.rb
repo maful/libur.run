@@ -17,7 +17,7 @@ describe "Submit claim" do
     ct_meal
   end
 
-  it "valid inputs" do
+  it "valid inputs", sidekiq: :inline do
     visit claims_path
     expect(page).to(have_selector("h1", text: "Claims Management"))
     expect(page).to(have_current_path(claims_path))
@@ -29,7 +29,13 @@ describe "Submit claim" do
       { claim_type: ct_travel.name, amount: 30, issue_date: "2023-01-31", note: "Taxi" },
       { claim_type: ct_meal.name, amount: 7, issue_date: "2023-01-31", note: "Breakfast" },
       { claim_type: ct_meal.name, amount: 10, issue_date: "2023-01-31", note: "Lunch" },
-      { claim_type: ct_meal.name, amount: 15, issue_date: "2023-01-31", note: "Dinner" },
+      {
+        claim_type: ct_meal.name,
+        amount: 15,
+        issue_date: "2023-01-31",
+        note: "Dinner",
+        receipt: file_fixture("doctor-note.jpeg").to_s,
+      },
     ]
     within("turbo-frame#turbo_modal > div[data-controller='modal'][role='dialog']") do
       expect(page).to(have_selector("h1", text: "Submit a Claim"))
@@ -38,6 +44,7 @@ describe "Submit claim" do
         within("div[data-claims--form-target='targetForm']") do
           test_form.each do |tf|
             within("div[data-claims--form-target='newClaim']") do
+              expect(page).to(have_select("Claim type", with_options: [ct_travel.name, ct_meal.name]))
               find("select[name^='claim_group[claims_attributes]'][name$='[claim_type_id]']").select(tf[:claim_type])
               find("input[name^='claim_group[claims_attributes]'][name$='[amount]']").set(tf[:amount])
               issue_date_input = find("input[name^='claim_group[claims_attributes]'][name$='[issue_date]']")
@@ -46,11 +53,13 @@ describe "Submit claim" do
               # click outside the element to close the datepicker
               page.driver.browser.action.move_to(
                 issue_date_input.native,
-                issue_date_input_rect.width + 5,
+                issue_date_input_rect.width + 10,
                 0,
               ).click.perform
               find("textarea[name^='claim_group[claims_attributes]'][name$='[note]']").set(tf[:note])
-              find("input[type='file'][name$='[receipt]']").attach_file(file_fixture("doctor-note.jpeg").to_s)
+              if tf[:receipt].present?
+                find("input[type='file'][name$='[receipt]']").attach_file(tf[:receipt])
+              end
             end
             click_button("Add claim")
           end
@@ -60,6 +69,8 @@ describe "Submit claim" do
     end
     expect(page).to(have_content("Thanks for submitting your claim."))
     expect(find("turbo-frame#claim-groups-list")).to(have_selector("table tbody tr", count: 1))
+    expect(Claim.count).to(eq(4))
+    expect(Claim.last.receipt).to(be_attached)
     within(:xpath, ".//turbo-frame[@id='claim-groups-list']/table/tbody/tr[1]") do
       claim_group_decorator = ClaimGroupDecorator.new(employee.claim_groups.last)
       expect(page).to(have_xpath(".//td[1]", text: claim_group_decorator.name))
@@ -96,6 +107,40 @@ describe "Submit claim" do
       end
     end
     expect(ClaimGroup.count).to(eq(0))
+  end
+
+  it "invalid receipt - content type" do
+    visit claims_path
+    first(:link, "Submit claim", href: new_claim_path).click
+    expect(page).to(have_selector("turbo-frame#turbo_modal > div[data-controller='modal'][role='dialog']"))
+    within("turbo-frame#turbo_modal > div[data-controller='modal'][role='dialog']") do
+      within("div[data-claims--form-target='newClaim']") do
+        find("input[type='file'][name$='[receipt]']").attach_file(file_fixture("logo-dark.svg").to_s)
+      end
+      click_button("Add claim")
+      expect(page).to(have_selector(
+        "p.input-group__error-message",
+        text: I18n.t("errors.messages.content_type_invalid"),
+      ))
+    end
+  end
+
+  it "invalid receipt - file size" do
+    visit claims_path
+    first(:link, "Submit claim", href: new_claim_path).click
+    expect(page).to(have_selector("turbo-frame#turbo_modal > div[data-controller='modal'][role='dialog']"))
+    within("turbo-frame#turbo_modal > div[data-controller='modal'][role='dialog']") do
+      receipt_file = file_fixture("big-image.jpg")
+      within("div[data-claims--form-target='newClaim']") do
+        find("input[type='file'][name$='[receipt]']").attach_file(receipt_file.to_s)
+      end
+      click_button("Add claim")
+      file_size = ActiveSupport::NumberHelper.number_to_human_size(receipt_file.size)
+      expect(page).to(have_selector(
+        "p.input-group__error-message",
+        text: I18n.t("errors.messages.file_size_out_of_range", file_size:),
+      ))
+    end
   end
 
   it "is able to delete claim item" do

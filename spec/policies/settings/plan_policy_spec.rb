@@ -8,15 +8,13 @@ RSpec.describe(Settings::PlanPolicy, type: :policy) do
   let(:object) { nil }
 
   context "when being a user" do
-    let(:account) { create(:account, with_employee: true) }
-    let(:user) { account.employee }
+    let(:user) { create(:employee) }
 
     it { should(forbid_action(:show)) }
   end
 
   context "when being an admin" do
-    let(:account) { create(:account) }
-    let(:user) { create(:employee, with_admin_role: true, account:) }
+    let(:user) { create(:admin) }
 
     it { should(permit_action(:show)) }
   end

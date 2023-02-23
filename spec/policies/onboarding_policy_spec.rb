@@ -8,8 +8,7 @@ RSpec.describe(OnboardingPolicy) do
   let(:object) { nil }
 
   context "when being a normal user" do
-    let(:account) { create(:account, with_employee: true) }
-    let(:user) { account.employee }
+    let(:user) { create(:employee) }
 
     it { should(forbid_actions([:index, :personal_info, :company_info])) }
     it { should(forbid_actions([:confirmation, :verified])) }
@@ -17,8 +16,7 @@ RSpec.describe(OnboardingPolicy) do
   end
 
   context "when being an admin" do
-    let(:account) { create(:account) }
-    let(:user) { create(:employee, with_admin_role: true, account:) }
+    let(:user) { create(:admin) }
 
     it { should(permit_actions([:index, :personal_info, :company_info])) }
     it { should(permit_actions([:confirmation, :verified])) }

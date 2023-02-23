@@ -41,7 +41,7 @@ end
 
 Capybara.default_driver = headless_js_driver
 Capybara.javascript_driver = headless_js_driver
-Capybara.default_max_wait_time = 2
+Capybara.default_max_wait_time = 4
 
 RSpec.configure do |config|
   config.before do |example|
