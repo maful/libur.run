@@ -19,12 +19,13 @@ RSpec.describe(Leave) do
     it { should validate_presence_of(:year) }
     it { should validate_length_of(:note).is_at_most(100).with_message("100 characters is the maximum allowed") }
     it { should validate_length_of(:comment).is_at_most(100).with_message("100 characters is the maximum allowed") }
-
     it {
       expect(subject).to(validate_inclusion_of(:half_day_time)
         .in_array(["AM", "PM"])
         .with_message("Shoulda::Matchers::ExampleClass is not a valid time"))
     }
+    it { should validate_content_type_of(:document).allowing("image/png", "image/jpeg", "application/pdf") }
+    it { should validate_size_of(:document).less_than_or_equal_to(1.megabytes) }
   end
 end
 

@@ -37,6 +37,11 @@ export default class extends Controller {
         `textarea[id=${noteInputId}]`
       )
 
+      const receiptInputId = `claim_group_claims_attributes_${this.objectId}_receipt`
+      this.receiptInput = this.newClaimTarget.querySelector(
+        `input[id=${receiptInputId}]`
+      )
+
       const validateForm = await this._validateNewClaim()
       if (validateForm) {
         this._createRow()
@@ -72,16 +77,16 @@ export default class extends Controller {
   }
 
   async _validateNewClaim() {
-    const body = {
-      claim: {
-        note: this.noteInput.value,
-        issue_date: this.dateInput.value,
-        amount: this.amountInput.value,
-        claim_type_id: this.typeSelectOption.value,
-      },
+    const formData = new FormData()
+    formData.append("claim[note]", this.noteInput.value)
+    formData.append("claim[issue_date]", this.dateInput.value)
+    formData.append("claim[amount]", this.amountInput.value)
+    formData.append("claim[claim_type_id]", this.typeSelectOption.value)
+    if (this.receiptInput.files[0]) {
+      formData.append("claim[receipt]", this.receiptInput.files[0])
     }
     const response = await post("/claims/validate_claim", {
-      body,
+      body: formData,
       responseKind: "json",
     })
 
@@ -94,6 +99,7 @@ export default class extends Controller {
         { name: "note", label: "Note", elm: this.noteInput },
         { name: "amount", label: "Amount", elm: this.amountInput },
         { name: "claim_type", label: "Claim type", elm: this.typeSelect },
+        { name: "receipt", label: "Receipt", elm: this.receiptInput },
       ]
       for (let field of fields) {
         if (json[field.name]) {
