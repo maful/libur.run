@@ -1,10 +1,21 @@
+# frozen_string_literal: true
+
 class RodauthMain < Rodauth::Rails::Auth
   configure do
     # List of authentication features that are loaded.
-    enable :verify_account, :verify_account_grace_period,
-      :login, :logout, :remember,
-      :reset_password, :change_password, :change_password_notify,
-      :change_login, :verify_login_change, :close_account, :internal_request
+    enable :verify_account,
+      :verify_account_grace_period,
+      :login,
+      :logout,
+      :remember,
+      :reset_password,
+      :change_password,
+      :change_password_notify,
+      :change_login,
+      :verify_login_change,
+      :close_account,
+      :internal_request,
+      :path_class_methods
 
     # See the Rodauth documentation for the list of available config options:
     # http://rodauth.jeremyevans.net/documentation.html
@@ -132,7 +143,7 @@ class RodauthMain < Rodauth::Rails::Auth
         verify_account
         remove_verify_account_key
         if verify_account_autologin?
-          autologin_session('verify_account')
+          autologin_session("verify_account")
         end
         remove_session_value(verify_account_session_key)
         set_notice_flash verify_account_notice_flash
@@ -170,20 +181,21 @@ class RodauthMain < Rodauth::Rails::Auth
     # remember_deadline_interval Hash[days: 30]
 
     # Customize
-    login_label { 'Email' }
-    login_button { 'Sign in'}
-    login_page_title { 'Sign in to your account' }
-    logout_button { 'Sign out' }
-    remember_remember_label { 'Remember me' }
-    reset_password_request_link_text { 'Forgot your password?' }
-    reset_password_request_page_title { 'Reset your password' }
-    reset_password_request_button { 'Reset your password' }
+    login_label { "Email" }
+    login_button { "Sign in" }
+    login_page_title { "Sign in to your account" }
+    login_error_flash { "Incorrect Email or Password" }
+    logout_button { "Sign out" }
+    remember_remember_label { "Remember me" }
+    reset_password_request_link_text { "Forgot your password?" }
+    reset_password_request_page_title { "Reset your password" }
+    reset_password_request_button { "Reset your password" }
     reset_password_explanatory_text { "Enter your email and we'll send you a link to reset your password." }
-    reset_password_page_title { 'Create new password' }
-    reset_password_button { 'Reset password' }
+    reset_password_page_title { "Create new password" }
+    reset_password_button { "Reset password" }
     resend_verify_account_page_title { "Didn't receive verification email?" }
-    verify_account_resend_button { 'Resend verification' }
-    verify_account_resend_link_text { 'Verify now' }
+    verify_account_resend_button { "Resend verification" }
+    verify_account_resend_link_text { "Verify now" }
     verify_account_resend_explanatory_text { "No worries. We'll gladly send you a new one" }
   end
 end
