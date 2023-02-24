@@ -87,7 +87,7 @@ class RodauthMain < Rodauth::Rails::Auth
 
     # ==> Validation
     # Override default validation error messages.
-    # no_matching_login_message "user with this email address doesn't exist"
+    no_matching_login_message "Email address doesn't exist"
     # already_an_account_with_this_login_message "user with this email address already exists"
     # password_too_short_message { "needs to have at least #{password_minimum_length} characters" }
     # login_does_not_meet_requirements_message { "invalid email#{", #{login_requirement_message}" if login_requirement_message}" }
