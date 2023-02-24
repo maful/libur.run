@@ -11,13 +11,13 @@ describe "Sign in" do
     employee
   end
 
-  it "navigation", :selenium_chrome do
+  it "navigation" do
     visit RodauthApp.rodauth.login_path
     expect(page).to(have_selector("h1", text: "Sign in to your account"))
     expect(page).to(have_current_path(RodauthApp.rodauth.login_path))
   end
 
-  it "valid credentials", :selenium_chrome do
+  it "valid credentials" do
     visit RodauthApp.rodauth.login_path
     within("form") do
       fill_in("login", with: account.email)
@@ -29,7 +29,7 @@ describe "Sign in" do
     expect(page).to(have_current_path(home_path))
   end
 
-  it "invalid email", :selenium_chrome do
+  it "invalid email" do
     visit RodauthApp.rodauth.login_path
     within("form") do
       fill_in("login", with: Faker::Internet.unique.email(domain: "examplecom"))
@@ -39,7 +39,7 @@ describe "Sign in" do
     end
   end
 
-  it "invalid password", :selenium_chrome do
+  it "invalid password" do
     visit RodauthApp.rodauth.login_path
     within("form") do
       fill_in("login", with: account.email)
@@ -49,7 +49,7 @@ describe "Sign in" do
     end
   end
 
-  it "have not setup the app", :selenium_chrome do
+  it "have not setup the app" do
     DataVariables.company.destroy
     visit RodauthApp.rodauth.login_path
     # redirected to installation page
