@@ -1,4 +1,6 @@
 class RodauthMailer < ApplicationMailer
+  before_action :set_company
+
   def verify_account(name, account_id, key)
     @email_link = email_link(name, :verify_account, account_id, key)
     @account = find_account(name, account_id)
@@ -57,5 +59,9 @@ class RodauthMailer < ApplicationMailer
 
   def rodauth(name)
     RodauthApp.rodauth(name).allocate
+  end
+
+  def set_company
+    @company = Company.first
   end
 end
