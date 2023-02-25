@@ -15,8 +15,6 @@ RSpec.describe(Claim) do
 
     it { should validate_presence_of(:issue_date) }
     it { should validate_length_of(:note).is_at_most(200).with_message("200 characters is the maximum allowed") }
-    it { should validate_content_type_of(:receipt).allowing("image/png", "image/jpeg", "application/pdf") }
-    it { should validate_size_of(:receipt).less_than_or_equal_to(1.megabytes) }
   end
 end
 

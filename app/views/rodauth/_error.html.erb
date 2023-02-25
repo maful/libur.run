@@ -1,0 +1,10 @@
+<% if notice %>
+  <%= render(AlertComponent.new(dismissable: true)) do %>
+    <%= notice %>
+  <% end %>
+<% end %>
+<% if alert %>
+  <%= render(AlertComponent.new(status: :error, dismissable: true)) do %>
+    <%= alert %>
+  <% end %>
+<% end %>

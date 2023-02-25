@@ -74,7 +74,7 @@ describe "Update personal info" do
       click_button("Save")
       expect(page).to(have_selector(
         "p.input-group__error-message",
-        text: I18n.t("errors.messages.content_type_invalid"),
+        text: I18n.t("activerecord.errors.messages.content_type"),
       ))
     end
   end
@@ -83,13 +83,12 @@ describe "Update personal info" do
     visit settings_me_path
 
     within("form.simple_form") do
-      avatar_file = file_fixture("big-image.jpg")
-      attach_file("user[avatar]", avatar_file.to_s)
+      attach_file("user[avatar]", file_fixture("big-image.jpg"))
       click_button("Save")
-      file_size = ActiveSupport::NumberHelper.number_to_human_size(avatar_file.size)
+      max_size = ActiveSupport::NumberHelper.number_to_human_size(Employee::MAX_AVATAR_SIZE)
       expect(page).to(have_selector(
         "p.input-group__error-message",
-        text: I18n.t("errors.messages.file_size_out_of_range", file_size:),
+        text: I18n.t("activerecord.errors.messages.max_size_error", max_size:),
       ))
     end
   end

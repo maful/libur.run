@@ -3,6 +3,8 @@
 class Claim < ApplicationRecord
   include PublicIdGenerator
 
+  MAX_RECEIPT_SIZE = 1.megabyte
+
   self.public_id_prefix = "cla_"
 
   belongs_to :claim_group, optional: true
@@ -16,8 +18,10 @@ class Claim < ApplicationRecord
   validates :issue_date, presence: true
   validates :note, length: { maximum: 200, too_long: "%{count} characters is the maximum allowed" }
   validates :receipt,
-    content_type: ["image/png", "image/jpeg", "application/pdf"],
-    size: { less_than_or_equal_to: 1.megabytes }
+    blob: {
+      content_type: ["image/png", "image/jpeg", "application/pdf"],
+      size_range: 1..(MAX_RECEIPT_SIZE),
+    }
 end
 
 # == Schema Information

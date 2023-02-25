@@ -79,7 +79,7 @@ describe "Company profile" do
       click_button("Update Company Profile")
       expect(page).to(have_selector(
         "p.input-group__error-message",
-        text: I18n.t("errors.messages.content_type_invalid"),
+        text: I18n.t("activerecord.errors.messages.content_type"),
       ))
     end
   end
@@ -88,13 +88,12 @@ describe "Company profile" do
     visit settings_company_path
 
     within("form.simple_form#form_company_#{company.id}") do
-      avatar_file = file_fixture("big-image.jpg")
-      attach_file("company[logo]", avatar_file.to_s)
+      attach_file("company[logo]", file_fixture("big-image.jpg").to_s)
       click_button("Update Company Profile")
-      file_size = ActiveSupport::NumberHelper.number_to_human_size(avatar_file.size)
+      max_size = ActiveSupport::NumberHelper.number_to_human_size(Company::MAX_LOGO_SIZE)
       expect(page).to(have_selector(
         "p.input-group__error-message",
-        text: I18n.t("errors.messages.file_size_out_of_range", file_size:),
+        text: I18n.t("activerecord.errors.messages.max_size_error", max_size:),
       ))
     end
   end

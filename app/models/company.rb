@@ -3,6 +3,8 @@
 class Company < ApplicationRecord
   include PublicIdGenerator
 
+  MAX_LOGO_SIZE = 1.megabyte
+
   self.public_id_prefix = "com_"
 
   has_one_attached :logo
@@ -16,7 +18,11 @@ class Company < ApplicationRecord
     presence: true,
     format: { with: URI::MailTo::EMAIL_REGEXP },
     uniqueness: { case_sensitive: false }
-  validates :logo, content_type: ["image/png", "image/jpeg"], size: { less_than_or_equal_to: 1.megabytes }
+  validates :logo,
+    blob: {
+      content_type: ["image/png", "image/jpeg"],
+      size_range: 1..(MAX_LOGO_SIZE),
+    }
 end
 
 # == Schema Information

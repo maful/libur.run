@@ -7,6 +7,8 @@ class Employee < ApplicationRecord
   include MaritalStatus
   include ClearCacheCollection
 
+  MAX_AVATAR_SIZE = 1.megabyte
+
   self.public_id_prefix = "emp_"
 
   enum :religion, RELIGION_LIST, scopes: false, suffix: true
@@ -44,7 +46,7 @@ class Employee < ApplicationRecord
   validates :marital_status, presence: true, on: :employee_setup
   validates :citizenship, presence: true, on: :employee_setup
   validates :start_date, presence: true, on: :employee_setup
-  validates :avatar, content_type: ["image/png", "image/jpeg"], size: { less_than_or_equal_to: 1.megabytes }
+  validates :avatar, blob: { content_type: ["image/png", "image/jpeg"], size_range: 1..(MAX_AVATAR_SIZE) }
 
   after_create :initiate_leave_balances
   after_create_commit :assign_default_role

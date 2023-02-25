@@ -73,7 +73,7 @@ gem "after_commit_everywhere", "~> 1.2"
 gem "pagy", "~> 6.0"
 gem "ransack", "~> 3.2"
 gem "money-rails", "~> 1.15"
-gem "active_storage_validations", "~> 1.0"
+gem "activestorage-validator", "~> 0.2.2"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

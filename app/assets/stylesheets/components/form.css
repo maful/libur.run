@@ -172,7 +172,7 @@
   } */
 
   &__error {
-    @apply mt-2 text-sm text-red-600;
+    @apply text-sm text-red-600;
   }
 }
 

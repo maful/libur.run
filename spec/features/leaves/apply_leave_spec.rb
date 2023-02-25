@@ -74,7 +74,7 @@ describe "Apply leave" do
       find("div.modal__footer").click_button("Submit")
       expect(page).to(have_selector(
         "p.input-group__error-message",
-        text: I18n.t("errors.messages.content_type_invalid"),
+        text: I18n.t("activerecord.errors.messages.content_type"),
       ))
     end
     expect(employee.leaves.count).to(eq(0))
@@ -84,13 +84,12 @@ describe "Apply leave" do
     visit leaves_path
     first(:link, "Apply leave", href: new_leave_path).click
     within("turbo-frame#turbo_modal > div[data-controller='modal'][role='dialog']") do
-      attachment_file = file_fixture("big-image.jpg")
-      attach_file("leave[document]", attachment_file.to_s)
+      attach_file("leave[document]", file_fixture("big-image.jpg").to_s)
       find("div.modal__footer").click_button("Submit")
-      file_size = ActiveSupport::NumberHelper.number_to_human_size(attachment_file.size)
+      max_size = ActiveSupport::NumberHelper.number_to_human_size(Leave::MAX_DOCUMENT_SIZE)
       expect(page).to(have_selector(
         "p.input-group__error-message",
-        text: I18n.t("errors.messages.file_size_out_of_range", file_size:),
+        text: I18n.t("activerecord.errors.messages.max_size_error", max_size:),
       ))
     end
     expect(employee.leaves.count).to(eq(0))
