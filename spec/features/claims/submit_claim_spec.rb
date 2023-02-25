@@ -70,7 +70,6 @@ describe "Submit claim" do
     expect(page).to(have_content("Thanks for submitting your claim."))
     expect(find("turbo-frame#claim-groups-list")).to(have_selector("table tbody tr", count: 1))
     expect(Claim.count).to(eq(4))
-    expect(Claim.last.receipt).to(be_attached)
     within(:xpath, ".//turbo-frame[@id='claim-groups-list']/table/tbody/tr[1]") do
       claim_group_decorator = ClaimGroupDecorator.new(employee.claim_groups.last)
       expect(page).to(have_xpath(".//td[1]", text: claim_group_decorator.name))

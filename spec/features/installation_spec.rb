@@ -97,9 +97,6 @@ describe "Installation" do
     visit installation_index_path
 
     create(:employee)
-    # delete company for testing
-    Company.first&.destroy
-
     # introduction
     find("form").click_button("Next")
     # license
@@ -131,9 +128,6 @@ describe "Installation" do
     visit installation_index_path
 
     create(:employee)
-    # delete company for testing
-    Company.first&.destroy
-
     # introduction
     find("form").click_button("Next")
     # license
@@ -143,11 +137,14 @@ describe "Installation" do
     click_button("Save and Continue")
 
     expect(page).to(have_selector("span#installation_title", text: "Company Details"))
+    within("form") do
+      fill_in("company[name]", with: "")
+      fill_in("company[email]", with: "")
+    end
     click_button("Save and Continue")
     within("form") do
       expect(page).to(have_selector("p.input-group__error-message", text: "Name can't be blank"))
       expect(page).to(have_selector("p.input-group__error-message", text: "Email can't be blank"))
     end
-    expect(Company.count).to(eq(0))
   end
 end

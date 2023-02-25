@@ -54,5 +54,6 @@ describe "Sign in" do
     visit RodauthApp.rodauth.login_path
     # redirected to installation page
     expect(page).to(have_current_path(installation_index_path))
+    DataVariables.company = create(:company)
   end
 end
