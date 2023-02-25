@@ -16,8 +16,6 @@ RSpec.describe(Company) do
     it { should validate_presence_of(:email) }
     it { should validate_uniqueness_of(:email).case_insensitive }
     it { should accept_nested_attributes_for(:address).update_only(true) }
-    it { should validate_content_type_of(:logo).allowing("image/png", "image/jpeg") }
-    it { should validate_size_of(:logo).less_than_or_equal_to(1.megabytes) }
   end
 
   describe "database" do

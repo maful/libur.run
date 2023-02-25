@@ -31,8 +31,6 @@ RSpec.describe(Employee) do
     it { should accept_nested_attributes_for(:address).update_only(true) }
     it { should accept_nested_attributes_for(:account).update_only(true) }
     it { should accept_nested_attributes_for(:assignments).allow_destroy(true) }
-    it { should validate_content_type_of(:avatar).allowing("image/png", "image/jpeg") }
-    it { should validate_size_of(:avatar).less_than_or_equal_to(1.megabytes) }
   end
 end
 

@@ -5,7 +5,6 @@ require "rails_helper"
 RSpec.describe(TeamClaimsPolicy, type: :policy) do
   subject { described_class.new(user, object) }
 
-  let(:company) { DataVariables.company }
   let(:object) { nil }
 
   context "when being a user" do
@@ -19,7 +18,12 @@ RSpec.describe(TeamClaimsPolicy, type: :policy) do
     let(:user) { create(:employee) }
 
     before do
-      company.update(finance_approver: user)
+      user
+      DataVariables.company.update(finance_approver_id: user.id)
+    end
+
+    after do
+      DataVariables.company.update(finance_approver_id: nil)
     end
 
     it { should(permit_actions([:index, :show])) }

@@ -119,7 +119,7 @@ describe "Submit claim" do
       click_button("Add claim")
       expect(page).to(have_selector(
         "p.input-group__error-message",
-        text: I18n.t("errors.messages.content_type_invalid"),
+        text: I18n.t("activerecord.errors.messages.content_type"),
       ))
     end
   end
@@ -129,15 +129,14 @@ describe "Submit claim" do
     first(:link, "Submit claim", href: new_claim_path).click
     expect(page).to(have_selector("turbo-frame#turbo_modal > div[data-controller='modal'][role='dialog']"))
     within("turbo-frame#turbo_modal > div[data-controller='modal'][role='dialog']") do
-      receipt_file = file_fixture("big-image.jpg")
       within("div[data-claims--form-target='newClaim']") do
-        find("input[type='file'][name$='[receipt]']").attach_file(receipt_file.to_s)
+        find("input[type='file'][name$='[receipt]']").attach_file(file_fixture("big-image.jpg").to_s)
       end
       click_button("Add claim")
-      file_size = ActiveSupport::NumberHelper.number_to_human_size(receipt_file.size)
+      max_size = ActiveSupport::NumberHelper.number_to_human_size(Claim::MAX_RECEIPT_SIZE)
       expect(page).to(have_selector(
         "p.input-group__error-message",
-        text: I18n.t("errors.messages.file_size_out_of_range", file_size:),
+        text: I18n.t("activerecord.errors.messages.max_size_error", max_size:),
       ))
     end
   end

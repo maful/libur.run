@@ -6,6 +6,8 @@ class Leave < ApplicationRecord
   include PublicIdGenerator
   include ClearCacheCollection
 
+  MAX_DOCUMENT_SIZE = 1.megabyte
+
   attribute :year, default: -> { Date.current.year }
 
   self.public_id_prefix = "lea_"
@@ -23,8 +25,10 @@ class Leave < ApplicationRecord
   validates :comment, length: { maximum: 100, too_long: "%{count} characters is the maximum allowed" }
   validates :half_day_time, inclusion: { in: ["AM", "PM"], message: "%{value} is not a valid time" }, allow_blank: true
   validates :document,
-    content_type: ["image/png", "image/jpeg", "application/pdf"],
-    size: { less_than_or_equal_to: 1.megabytes }
+    blob: {
+      content_type: ["image/png", "image/jpeg", "application/pdf"],
+      size_range: 1..(MAX_DOCUMENT_SIZE),
+    }
   validate :ensure_leave_balance_sufficient, on: :leave_approval, if: :approved?
 
   before_validation :calculate_days_of_leave, on: :create
