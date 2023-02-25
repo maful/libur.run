@@ -80,8 +80,10 @@ RSpec.configure do |config|
     DataVariables.company = FactoryBot.create(:company)
   end
 
-  config.before(:each, type: :feature) do
-    DataVariables.admin = FactoryBot.create(:admin)
+  config.before(:example, type: :feature) do |example|
+    unless example.metadata[:skip_admin]
+      DataVariables.admin = FactoryBot.create(:admin)
+    end
   end
 
   config.after(:suite) do
