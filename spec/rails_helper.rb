@@ -12,6 +12,7 @@ require "pundit/rspec"
 require "view_component/test_helpers"
 require "webdrivers/chromedriver"
 require "capybara/rails"
+require "capybara/rspec"
 require "rack_session_access/capybara"
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -39,17 +40,18 @@ end
 RSpec.configure do |config|
   config.include(AuthHelper)
   config.include(ActiveSupport::Testing::TimeHelpers)
+  config.include(FeatureHelpers, type: :feature)
+  config.include(ViewComponent::TestHelpers, type: :component)
+  config.include(ViewComponent::SystemTestHelpers, type: :component)
+  config.include(Capybara::RSpecMatchers, type: :component)
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.fixture_path = "#{Rails.root}/spec/fixtures"
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = false
-
-  config.include(FeatureHelpers, type: :feature)
-  config.include(ViewComponent::TestHelpers, type: :component)
 
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false

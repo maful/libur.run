@@ -16,9 +16,11 @@ class ClaimGroup < ApplicationRecord
 
   monetize :total_amount_cents, numericality: { greater_than_or_equal_to: 0 }
 
-  accepts_nested_attributes_for :claims, reject_if: proc { |attrs|
-                                                      attrs["claim_type_id"].blank? || attrs["issue_date"].blank?
-                                                    }, limit: 10
+  accepts_nested_attributes_for :claims,
+    reject_if: proc { |attrs|
+                 attrs["claim_type_id"].blank? || attrs["issue_date"].blank?
+               },
+    limit: 10
 
   validates :name, presence: true
   validates :name, length: { maximum: 50, too_long: "%{count} characters is the maximum allowed" }

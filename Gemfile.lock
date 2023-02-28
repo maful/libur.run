@@ -476,7 +476,7 @@ DEPENDENCIES
   turbo-rails
   turbo_ready (~> 0.1.2)
   tzinfo-data
-  view_component (~> 2.74)
+  view_component (~> 2.82)
   web-console
   webdrivers (~> 5.2)
 

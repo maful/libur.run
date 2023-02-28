@@ -21,7 +21,7 @@ class Company < ApplicationRecord
   validates :logo,
     blob: {
       content_type: ["image/png", "image/jpeg"],
-      size_range: 1..(MAX_LOGO_SIZE),
+      size_range: 1..MAX_LOGO_SIZE,
     }
 end
 

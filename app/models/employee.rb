@@ -46,7 +46,7 @@ class Employee < ApplicationRecord
   validates :marital_status, presence: true, on: :employee_setup
   validates :citizenship, presence: true, on: :employee_setup
   validates :start_date, presence: true, on: :employee_setup
-  validates :avatar, blob: { content_type: ["image/png", "image/jpeg"], size_range: 1..(MAX_AVATAR_SIZE) }
+  validates :avatar, blob: { content_type: ["image/png", "image/jpeg"], size_range: 1..MAX_AVATAR_SIZE }
 
   after_create :initiate_leave_balances
   after_create_commit :assign_default_role
