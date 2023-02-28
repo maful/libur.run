@@ -27,7 +27,7 @@ class Leave < ApplicationRecord
   validates :document,
     blob: {
       content_type: ["image/png", "image/jpeg", "application/pdf"],
-      size_range: 1..(MAX_DOCUMENT_SIZE),
+      size_range: 1..MAX_DOCUMENT_SIZE,
     }
   validate :ensure_leave_balance_sufficient, on: :leave_approval, if: :approved?
 

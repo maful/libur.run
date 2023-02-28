@@ -20,7 +20,7 @@ class Claim < ApplicationRecord
   validates :receipt,
     blob: {
       content_type: ["image/png", "image/jpeg", "application/pdf"],
-      size_range: 1..(MAX_RECEIPT_SIZE),
+      size_range: 1..MAX_RECEIPT_SIZE,
     }
 end
 
