@@ -2,14 +2,20 @@
 
 require "rails_helper"
 
+# rubocop:disable RSpec/DescribedClass
 RSpec.describe(Modal::FooterComponent, type: :component) do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "renders default" do
+    render_in_view_context do
+      render(Modal::FooterComponent.new) { tag.div("Actions") }
+    end
+    expect(page).to(have_selector("div.modal__footer", text: "Actions"))
+  end
 
-  # it "renders something useful" do
-  #   expect(
-  #     render_inline(described_class.new(attr: "value")) { "Hello, components!" }.css("p").to_html
-  #   ).to include(
-  #     "Hello, components!"
-  #   )
-  # end
+  it "renders without content" do
+    render_in_view_context do
+      render(Modal::FooterComponent.new)
+    end
+    expect(page).not_to(have_selector("div.modal__footer"))
+  end
 end
+# rubocop:enable RSpec/DescribedClass
