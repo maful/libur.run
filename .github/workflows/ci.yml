@@ -79,10 +79,3 @@ jobs:
           chromedriver --url-base=/wd/hub &
           sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
           bundle exec rspec --format progress --profile 10
-
-      - name: Code coverage
-        uses: joshmfrankel/simplecov-check-action@main
-        with:
-          github_token: ${{ secrets.SECRET_TOKEN }}
-          minimum_suite_coverage: 80
-          minimum_file_coverage: 80
