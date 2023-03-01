@@ -33,3 +33,7 @@ RSpec/MultipleMemoizedHelpers:
 
 Capybara/VisibilityMatcher:
   Enabled: false
+
+RSpec/ContextWording:
+  Exclude:
+    - 'spec/decorators/**/*'

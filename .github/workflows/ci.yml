@@ -15,8 +15,10 @@ jobs:
     env:
       RAILS_ENV: test
       RAILS_CI: 1
+      COVERAGE: 1
       DATABASE_URL: postgres://postgres:password@localhost:5432/liburrun_test
       SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
+      CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
 
     services:
       postgres:
@@ -78,3 +80,6 @@ jobs:
           chromedriver --url-base=/wd/hub &
           sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
           bundle exec rspec --format progress --profile 10
+
+      - name: Publish code coverage
+        uses: paambaati/codeclimate-action@v3.2.0
