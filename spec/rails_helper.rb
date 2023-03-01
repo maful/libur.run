@@ -2,15 +2,9 @@
 
 if ENV["COVERAGE"]
   require "simplecov"
-  require "simplecov_json_formatter"
-
-  SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
-    SimpleCov::Formatter::HTMLFormatter,
-    SimpleCov::Formatter::JSONFormatter
-  ])
   SimpleCov.start("rails") do
     enable_coverage :branch
-    minimum_coverage 80
+    minimum_coverage 90
     add_filter("app/misc")
     add_group("Components", "app/components")
     add_group("Decorators", "app/decorators")
