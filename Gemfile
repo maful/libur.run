@@ -98,6 +98,7 @@ group :test do
   gem "webdrivers", "~> 5.2", require: false
   gem "rack_session_access", "~> 0.2"
   gem "database_cleaner-active_record", "~> 2.1"
+  gem "simplecov", "~> 0.22.0", require: false
 end
 
 group :development do

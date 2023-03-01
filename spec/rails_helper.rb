@@ -1,5 +1,23 @@
 # frozen_string_literal: true
 
+if ENV["COVERAGE"]
+  require "simplecov"
+  require "simplecov_json_formatter"
+
+  SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
+    SimpleCov::Formatter::HTMLFormatter,
+    SimpleCov::Formatter::JSONFormatter
+  ])
+  SimpleCov.start("rails") do
+    enable_coverage :branch
+    minimum_coverage 80
+    add_filter("app/misc")
+    add_group("Components", "app/components")
+    add_group("Decorators", "app/decorators")
+    add_group("Policies", "app/policies")
+  end
+end
+
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require "spec_helper"
 ENV["RAILS_ENV"] ||= "test"

@@ -15,6 +15,7 @@ jobs:
     env:
       RAILS_ENV: test
       RAILS_CI: 1
+      COVERAGE: 1
       DATABASE_URL: postgres://postgres:password@localhost:5432/liburrun_test
       SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
 
