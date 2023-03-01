@@ -20,6 +20,10 @@ FactoryBot.define do
     trait :canceled do
       approval_status { :canceled }
     end
+
+    trait :completed do
+      approval_status { :completed }
+    end
   end
 end
 

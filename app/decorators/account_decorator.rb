@@ -7,12 +7,10 @@ class AccountDecorator < ApplicationDecorator
     case object.status.to_sym
     when :verified
       :success
-    when :closed
-      :error
     when :unverified
       :warning
     else
-      :default
+      :error
     end
   end
 end

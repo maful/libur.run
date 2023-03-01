@@ -8,7 +8,7 @@ FactoryBot.define do
     comment { nil }
     approval_status { :pending }
     approval_date { nil }
-    half_day { nil }
+    half_day { false }
     half_day_time { nil }
     note do
       ["I will be going on vacation", "I need to take some time off for a medical procedure.",

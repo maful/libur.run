@@ -3,14 +3,26 @@
 require "rails_helper"
 
 RSpec.describe(ClaimTypeDecorator) do
-  let(:decorator) { ClaimTypeDecorator.new(object) }
+  let(:decorator) { described_class.new(object) }
   let(:object) { create(:claim_type) }
 
-  it "can get the status title" do
-    expect(decorator.status_title).to(eq("Active"))
+  context "can get active title" do
+    it { expect(decorator.status_title).to(eq("Active")) }
   end
 
-  it "can get the status badge" do
-    expect(decorator.status_badge).to(eq("success".to_sym))
+  context "can get inactive title" do
+    let(:object) { create(:claim_type, :inactive) }
+
+    it { expect(decorator.status_title).to(eq("Inactive")) }
+  end
+
+  context "can get active badge" do
+    it { expect(decorator.status_badge).to(eq(:success)) }
+  end
+
+  context "can get inactive badge" do
+    let(:object) { create(:claim_type, :inactive) }
+
+    it { expect(decorator.status_badge).to(eq(:error)) }
   end
 end

@@ -25,14 +25,12 @@ class EmployeeDecorator < ApplicationDecorator
 
   def status_badge
     case object.status.to_sym
-    when :active
-      :success
     when :inactive
       :error
     when :archived
       :warning
     else
-      :default
+      :success
     end
   end
 
