@@ -83,6 +83,6 @@ jobs:
       - name: Code coverage
         uses: joshmfrankel/simplecov-check-action@main
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.SECRET_TOKEN }}
           minimum_suite_coverage: 80
           minimum_file_coverage: 80
