@@ -74,6 +74,7 @@ gem "pagy", "~> 6.0"
 gem "ransack", "~> 3.2"
 gem "money-rails", "~> 1.15"
 gem "activestorage-validator", "~> 0.2.2"
+gem "public_activity", "~> 2.0"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
