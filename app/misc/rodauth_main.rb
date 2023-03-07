@@ -117,11 +117,24 @@ class RodauthMain < Rodauth::Rails::Auth
       end
     end
 
-    # after_login do
-    # end
+    after_login do
+      employee = Account.find(account_id).employee
+      employee.create_activity(
+        key: "authentication.login",
+        owner: employee,
+        recipient: employee,
+        params: { ip: request.ip },
+      )
+    end
 
-    # before_logout do
-    # end
+    before_logout do
+      employee = Account.find(session_value).employee
+      employee.create_activity(
+        key: "authentication.logout",
+        owner: employee,
+        recipient: employee,
+      )
+    end
 
     # Validate custom fields in the create account form.
     # before_create_account do
