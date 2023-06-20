@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -41,7 +43,7 @@ gem "hiredis", "~> 0.6.3"
 # gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
+gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
@@ -77,7 +79,7 @@ gem "activestorage-validator", "~> 0.2.2"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem "debug", platforms: [:mri, :mingw, :x64_mingw]
   gem "dotenv-rails", "~> 2.8"
   gem "rspec-rails", "~> 6.0"
   gem "factory_bot_rails", "~> 6.2"
@@ -93,9 +95,9 @@ group :test do
   gem "shoulda-matchers", "~> 5.2"
   gem "rails-controller-testing", "~> 1.0"
   gem "pundit-matchers", "~> 1.8"
-  gem "selenium-webdriver", "~> 4.8"
   gem "capybara", "~> 3.38"
-  gem "webdrivers", "~> 5.2", require: false
+  gem "cuprite", "~> 0.14.3"
+  gem "webmock", "~> 3.18"
   gem "rack_session_access", "~> 0.2"
   gem "database_cleaner-active_record", "~> 2.1"
   gem "simplecov", "~> 0.22.0", require: false
