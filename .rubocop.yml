@@ -13,6 +13,9 @@ AllCops:
     - 'db/**/*'
     - 'bin/**/*'
 
+Lint/MissingSuper:
+  Enabled: false
+
 RSpec/MultipleExpectations:
   Max: 5
   Exclude:
