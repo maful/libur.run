@@ -103,16 +103,22 @@ class Leave < ApplicationRecord
 
   def prevent_duplicate_date
     # check if start_date or end_date exists in the database
-    leaves = Leave.where(
-      ":date::date >= start_date AND :date::date <= end_date",
-      { date: start_date },
-    ).or(Leave.where(
-      ":date::date >= start_date AND :date::date <= end_date",
-      { date: end_date },
-    )).where(approval_status: [Leave::STATE_APPROVED, Leave::STATE_PENDING],
-      employee:)
+    duplicate_date = if number_of_days >= 1
+      Leave.where(
+        ":date::date >= start_date AND :date::date <= end_date",
+        { date: start_date },
+      ).or(Leave.where(
+        ":date::date >= start_date AND :date::date <= end_date",
+        { date: end_date },
+      ))
+    else
+      Leave.where(
+        ":date::date >= start_date AND :date::date <= end_date",
+        { date: start_date },
+      ).where(half_day_time:)
+    end
 
-    if leaves.exists?
+    if duplicate_date.exists?(approval_status: [Leave::STATE_APPROVED, Leave::STATE_PENDING], employee:)
       message = "It seems that you have already requested leave for that date. Please check your leave history."
       errors.add(:base, message)
     end
