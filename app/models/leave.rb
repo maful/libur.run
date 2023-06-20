@@ -33,6 +33,9 @@ class Leave < ApplicationRecord
 
   before_validation :calculate_days_of_leave, on: :create
   before_validation :ensure_leave_balance_sufficient, on: :create
+  before_validation :prevent_duplicate_date,
+    if: proc { start_date.present? && end_date.present? },
+    on: :create
 
   after_validation :set_half_day
 
@@ -95,6 +98,23 @@ class Leave < ApplicationRecord
 
     if number_of_days > leave_balance.remaining_balance
       errors.add(:base, message) && return
+    end
+  end
+
+  def prevent_duplicate_date
+    # check if start_date or end_date exists in the database
+    leaves = Leave.where(
+      ":date::date >= start_date AND :date::date <= end_date",
+      { date: start_date },
+    ).or(Leave.where(
+      ":date::date >= start_date AND :date::date <= end_date",
+      { date: end_date },
+    )).where(approval_status: [Leave::STATE_APPROVED, Leave::STATE_PENDING],
+      employee:)
+
+    if leaves.exists?
+      message = "It seems that you have already requested leave for that date. Please check your leave history."
+      errors.add(:base, message)
     end
   end
 end
