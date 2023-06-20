@@ -1,10 +1,6 @@
 {
   "recommendations": [
-    "wingrunr21.vscode-ruby",
     "bradlc.vscode-tailwindcss",
-    "rebornix.ruby",
     "esbenp.prettier-vscode",
-    "castwide.solargraph",
-    "eamodio.gitlens"
   ]
 }
