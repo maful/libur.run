@@ -48,17 +48,15 @@ describe "Submit claim" do
               find("select[name^='claim_group[claims_attributes]'][name$='[claim_type_id]']").select(tf[:claim_type])
               find("input[name^='claim_group[claims_attributes]'][name$='[amount]']").set(tf[:amount])
               issue_date_input = find("input[name^='claim_group[claims_attributes]'][name$='[issue_date]']")
-              issue_date_input_rect = issue_date_input.native.rect
               issue_date_input.set(tf[:issue_date])
+              issue_date_input_position = issue_date_input.native.node.find_position
               # click outside the element to close the datepicker
-              page.driver.browser.action.move_to(
-                issue_date_input.native,
-                issue_date_input_rect.width + 10,
-                0,
-              ).click.perform
+              page.driver.browser.mouse.click(x: issue_date_input_position[0], y: issue_date_input_position[1])
               find("textarea[name^='claim_group[claims_attributes]'][name$='[note]']").set(tf[:note])
               if tf[:receipt].present?
-                find("input[type='file'][name$='[receipt]']").attach_file(tf[:receipt])
+                attach_file(File.expand_path(tf[:receipt])) do
+                  find("input[type='file'][name$='[receipt]']").click
+                end
               end
             end
             click_button("Add claim")
@@ -114,7 +112,9 @@ describe "Submit claim" do
     expect(page).to(have_selector("turbo-frame#turbo_modal > div[data-controller='modal'][role='dialog']"))
     within("turbo-frame#turbo_modal > div[data-controller='modal'][role='dialog']") do
       within("div[data-claims--form-target='newClaim']") do
-        find("input[type='file'][name$='[receipt]']").attach_file(file_fixture("logo-dark.svg").to_s)
+        attach_file(File.expand_path(file_fixture("logo-dark.svg"))) do
+          find("input[type='file'][name$='[receipt]']").click
+        end
       end
       click_button("Add claim")
       expect(page).to(have_selector(
@@ -130,7 +130,9 @@ describe "Submit claim" do
     expect(page).to(have_selector("turbo-frame#turbo_modal > div[data-controller='modal'][role='dialog']"))
     within("turbo-frame#turbo_modal > div[data-controller='modal'][role='dialog']") do
       within("div[data-claims--form-target='newClaim']") do
-        find("input[type='file'][name$='[receipt]']").attach_file(file_fixture("big-image.jpg").to_s)
+        attach_file(File.expand_path(file_fixture("big-image.jpg"))) do
+          find("input[type='file'][name$='[receipt]']").click
+        end
       end
       click_button("Add claim")
       max_size = ActiveSupport::NumberHelper.number_to_human_size(Claim::MAX_RECEIPT_SIZE)
@@ -158,14 +160,10 @@ describe "Submit claim" do
               find("select[name^='claim_group[claims_attributes]'][name$='[claim_type_id]']").select(tf[:claim_type])
               find("input[name^='claim_group[claims_attributes]'][name$='[amount]']").set(tf[:amount])
               issue_date_input = find("input[name^='claim_group[claims_attributes]'][name$='[issue_date]']")
-              issue_date_input_rect = issue_date_input.native.rect
               issue_date_input.set(tf[:issue_date])
+              issue_date_input_position = issue_date_input.native.node.find_position
               # click outside the element to close the datepicker
-              page.driver.browser.action.move_to(
-                issue_date_input.native,
-                issue_date_input_rect.width + 5,
-                0,
-              ).click.perform
+              page.driver.browser.mouse.click(x: issue_date_input_position[0], y: issue_date_input_position[1])
               find("textarea[name^='claim_group[claims_attributes]'][name$='[note]']").set(tf[:note])
             end
             click_button("Add claim")

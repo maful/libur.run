@@ -68,7 +68,9 @@ describe "Installation" do
       fill_in("employee[name]", with: Faker::Name.name)
       fill_in("employee[account_attributes][email]", with: Faker::Internet.unique.email(domain: "example"))
       fill_in("employee[account_attributes][password]", with: Faker::Internet.password(min_length: 8))
-      attach_file("employee[avatar]", file_fixture("avatar.png").to_s)
+      attach_file(File.expand_path(file_fixture("avatar.png"))) do
+        find('input[name="employee[avatar]"]').click
+      end
     end
     click_button("Save and Continue")
     expect(page).to(have_selector("span#installation_title", text: "Company Details"))
@@ -117,7 +119,9 @@ describe "Installation" do
     within("form") do
       fill_in("company[name]", with: Faker::Company.name)
       fill_in("company[email]", with: Faker::Internet.unique.email(domain: "example"))
-      attach_file("company[logo]", file_fixture("avatar.png").to_s)
+      attach_file(File.expand_path(file_fixture("avatar.png"))) do
+        find('input[name="company[logo]"]').click
+      end
     end
     click_button("Save and Continue")
     expect(page).to(have_selector("span#installation_title", text: "Welcome!"))

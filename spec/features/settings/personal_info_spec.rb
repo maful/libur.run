@@ -40,7 +40,9 @@ describe "Update personal info" do
     within("form.simple_form") do
       fill_in("user[name]", with: new_name)
       fill_in("user[account_attributes][email]", with: new_email)
-      attach_file("user[avatar]", file_fixture("avatar.png").to_s)
+      attach_file(File.expand_path(file_fixture("avatar.png"))) do
+        find('input[name="user[avatar]"]').click
+      end
       fill_in("user[about]", with: new_bio)
       click_button("Save")
     end
@@ -70,7 +72,9 @@ describe "Update personal info" do
     visit settings_me_path
 
     within("form.simple_form") do
-      attach_file("user[avatar]", file_fixture("logo-dark.svg").to_s)
+      attach_file(File.expand_path(file_fixture("logo-dark.svg"))) do
+        find('input[name="user[avatar]"]').click
+      end
       click_button("Save")
       expect(page).to(have_selector(
         "p.input-group__error-message",
@@ -83,7 +87,9 @@ describe "Update personal info" do
     visit settings_me_path
 
     within("form.simple_form") do
-      attach_file("user[avatar]", file_fixture("big-image.jpg"))
+      attach_file(File.expand_path(file_fixture("big-image.jpg"))) do
+        find('input[name="user[avatar]"]').click
+      end
       click_button("Save")
       max_size = ActiveSupport::NumberHelper.number_to_human_size(Employee::MAX_AVATAR_SIZE)
       expect(page).to(have_selector(
