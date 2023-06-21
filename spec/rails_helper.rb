@@ -22,7 +22,6 @@ require "rspec/rails"
 # Add additional requires below this line. Rails is not loaded until this point!
 require "pundit/rspec"
 require "view_component/test_helpers"
-require "webdrivers/chromedriver"
 require "capybara/rails"
 require "capybara/rspec"
 require "rack_session_access/capybara"
@@ -40,7 +39,7 @@ require "rack_session_access/capybara"
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
 #
-Dir[Rails.root.join("spec", "support", "**", "*.rb")].sort.each { |f| require f }
+Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
 
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.
@@ -58,7 +57,7 @@ RSpec.configure do |config|
   config.include(Capybara::RSpecMatchers, type: :component)
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = "#{Rails.root}/spec/fixtures"
+  config.fixture_path = "#{Rails.root}/spec/fixtures" # rubocop:disable Rails/FilePath
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
