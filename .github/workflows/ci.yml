@@ -41,31 +41,30 @@ jobs:
           - "6379:6379"
 
     steps:
-      - name: Checkout code
+      - name: "☁️ checkout repository"
         uses: actions/checkout@v3
 
-      - name: Install Node.js
+      - name: "🔧 setup node"
         uses: actions/setup-node@v3
         with:
           node-version: 16.15.1
           cache: 'yarn'
 
-      - name: Install Ruby and Gems
+      - name: "📦 install dependencies"
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
 
-      - name: Install libvips
-        run: sudo apt install -y libvips
+      - name: "💾 setup database"
+        run: bin/rails db:schema:load
 
-      - name: Precomple assets
+      - name: "📀 compile assets"
         run: |
           bin/rails javascript:build
           bin/rails css:build
-          bin/rails db:schema:load
 
-      - name: Run tests
+      - name: "🔍 run tests"
         run: bundle exec rspec --format progress --profile 10
 
-      - name: Publish code coverage
+      - name: "📡 publish code coverage"
         uses: paambaati/codeclimate-action@v3.2.0
