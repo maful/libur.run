@@ -42,7 +42,9 @@ describe "Company profile" do
     expect(company.logo).not_to(be_attached)
     within("form.simple_form#form_company_#{company.id}") do
       fill_in("company[name]", with: new_name)
-      attach_file("company[logo]", file_fixture("avatar.png").to_s)
+      attach_file(File.expand_path(file_fixture("avatar.png"))) do
+        find('input[name="company[logo]"]').click
+      end
       fill_in("company[phone]", with: new_phone)
       fill_in("company[email]", with: new_email)
       find("select#company_finance_approver_id option", text: employee_decorator.name_with_email).select_option
@@ -75,7 +77,9 @@ describe "Company profile" do
     visit settings_company_path
 
     within("form.simple_form#form_company_#{company.id}") do
-      attach_file("company[logo]", file_fixture("logo-dark.svg").to_s)
+      attach_file(File.expand_path(file_fixture("logo-dark.svg"))) do
+        find('input[name="company[logo]"]').click
+      end
       click_button("Update Company Profile")
       expect(page).to(have_selector(
         "p.input-group__error-message",
@@ -88,7 +92,9 @@ describe "Company profile" do
     visit settings_company_path
 
     within("form.simple_form#form_company_#{company.id}") do
-      attach_file("company[logo]", file_fixture("big-image.jpg").to_s)
+      attach_file(File.expand_path(file_fixture("big-image.jpg"))) do
+        find('input[name="company[logo]"]').click
+      end
       click_button("Update Company Profile")
       max_size = ActiveSupport::NumberHelper.number_to_human_size(Company::MAX_LOGO_SIZE)
       expect(page).to(have_selector(

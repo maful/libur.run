@@ -58,7 +58,9 @@ describe "Submit claim" do
               ).click.perform
               find("textarea[name^='claim_group[claims_attributes]'][name$='[note]']").set(tf[:note])
               if tf[:receipt].present?
-                find("input[type='file'][name$='[receipt]']").attach_file(tf[:receipt])
+                attach_file(File.expand_path(tf[:receipt])) do
+                  find("input[type='file'][name$='[receipt]']").click
+                end
               end
             end
             click_button("Add claim")
@@ -114,7 +116,9 @@ describe "Submit claim" do
     expect(page).to(have_selector("turbo-frame#turbo_modal > div[data-controller='modal'][role='dialog']"))
     within("turbo-frame#turbo_modal > div[data-controller='modal'][role='dialog']") do
       within("div[data-claims--form-target='newClaim']") do
-        find("input[type='file'][name$='[receipt]']").attach_file(file_fixture("logo-dark.svg").to_s)
+        attach_file(File.expand_path(file_fixture("logo-dark.svg"))) do
+          find("input[type='file'][name$='[receipt]']").click
+        end
       end
       click_button("Add claim")
       expect(page).to(have_selector(
@@ -130,7 +134,9 @@ describe "Submit claim" do
     expect(page).to(have_selector("turbo-frame#turbo_modal > div[data-controller='modal'][role='dialog']"))
     within("turbo-frame#turbo_modal > div[data-controller='modal'][role='dialog']") do
       within("div[data-claims--form-target='newClaim']") do
-        find("input[type='file'][name$='[receipt]']").attach_file(file_fixture("big-image.jpg").to_s)
+        attach_file(File.expand_path(file_fixture("big-image.jpg"))) do
+          find("input[type='file'][name$='[receipt]']").click
+        end
       end
       click_button("Add claim")
       max_size = ActiveSupport::NumberHelper.number_to_human_size(Claim::MAX_RECEIPT_SIZE)

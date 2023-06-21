@@ -37,7 +37,9 @@ describe "Apply leave" do
         fill_in("leave[end_date]", with: "2023-02-03")
         find("span", text: "to").click # close the datepicker
         fill_in("leave[note]", with: "See you later!")
-        attach_file("leave[document]", file_fixture("doctor-note.jpeg").to_s)
+        attach_file(File.expand_path(file_fixture("doctor-note.jpeg"))) do
+          find('input[name="leave[document]"]').click
+        end
       end
       find("div.modal__footer").click_button("Submit")
     end
@@ -70,7 +72,9 @@ describe "Apply leave" do
     visit leaves_path
     first(:link, "Apply leave", href: new_leave_path).click
     within("turbo-frame#turbo_modal > div[data-controller='modal'][role='dialog']") do
-      attach_file("leave[document]", file_fixture("logo-dark.svg").to_s)
+      attach_file(File.expand_path(file_fixture("logo-dark.svg"))) do
+        find('input[name="leave[document]"]').click
+      end
       find("div.modal__footer").click_button("Submit")
       expect(page).to(have_selector(
         "p.input-group__error-message",
@@ -84,7 +88,9 @@ describe "Apply leave" do
     visit leaves_path
     first(:link, "Apply leave", href: new_leave_path).click
     within("turbo-frame#turbo_modal > div[data-controller='modal'][role='dialog']") do
-      attach_file("leave[document]", file_fixture("big-image.jpg").to_s)
+      attach_file(File.expand_path(file_fixture("big-image.jpg"))) do
+        find('input[name="leave[document]"]').click
+      end
       find("div.modal__footer").click_button("Submit")
       max_size = ActiveSupport::NumberHelper.number_to_human_size(Leave::MAX_DOCUMENT_SIZE)
       expect(page).to(have_selector(
