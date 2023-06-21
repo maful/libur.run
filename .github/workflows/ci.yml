@@ -55,6 +55,9 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: "🖼️ install libvips"
+        run: sudo apt install -y libvips
+
       - name: "💾 setup database"
         run: bin/rails db:schema:load
 
